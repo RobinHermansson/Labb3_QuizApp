@@ -19,14 +19,9 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        var pack = new QuestionPack("MyQuestionPack");
-        DataContext = new QuestionPackViewModel(pack);
+        DataContext = new MainWindowViewModel();
+        //var pack = new QuestionPack("MyQuestionPack");
+        //DataContext = new QuestionPackViewModel(pack);
     }
 
-    private void Button_Click(object sender, RoutedEventArgs e)
-    {
-        QuestionPackViewModel viewModel = (DataContext as QuestionPackViewModel); 
-        viewModel.Name = "New Name";
-        viewModel.Questions.Add(new Question("What is 1 + 1?", "2", "3", "4", "5"));
-    }
 }
