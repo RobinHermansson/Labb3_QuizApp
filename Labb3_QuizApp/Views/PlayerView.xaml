@@ -8,7 +8,44 @@
              d:DesignHeight="450" d:DesignWidth="800"
              DataContext="{Binding PlayerViewModel}">
     <Grid>
-        <StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" 
+               x:Name="CountdownTimer" 
+               Content="30" 
+               HorizontalAlignment="Right" 
+               VerticalAlignment="Top" 
+               FontSize="30" 
+               FontWeight="Bold"
+               Margin="10 10 10 0"/>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock x:Name="QuestionTextBlock"
+                       Text="{Binding ActivePack.Questions[0].Query}" 
+                       FontSize="25"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Bottom"
+                       Margin="10 10 10 0"/>
+            <TextBlock x:Name="QuestionCountTextBlock"
+                       Text="Question {ActivePack.Questions.Length.ToString}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Bottom"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Margin="10 10 10 10">
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Content="Longer text form answer goes here" Margin="10 10 10 0" Padding="20"></Button>
+                <Button Content="Longer text form answer goes here2" Margin="10 10 10 0" Padding="20"></Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 10 10 10">
+                <Button Content="Longer text form answer goes here3" Margin="10 10 10 0" Padding="20" ></Button>
+                <Button Content="Longer text form answer goes here4" Margin="10 10 10 0" Padding="20"></Button>
+            </StackPanel>
+
+
+
+            <!--
             <TextBox Text="{Binding DemoText, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Button Content="{Binding ActivePack.Name}"
@@ -16,6 +53,7 @@
                     VerticalAlignment="Center"
                     Command="{Binding SetPackNameCommand}"
             />
+            -->
         </StackPanel>
 
     </Grid>

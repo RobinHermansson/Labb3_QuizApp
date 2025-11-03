@@ -4,15 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Labb3_QuizApp.Views"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Menu>
             <MenuItem Header="_File">
-                <MenuItem Header="_New Question Pack"/>
+                <MenuItem Header="_New Question Pack" Icon="{fa:Icon File}"/>
                 <MenuItem Header="_Delete Question Pack"/>
                 <Separator/>
-                <MenuItem Header="E_xit"/>
+                <MenuItem Header="E_xit" Icon="{fa:Icon DoorOpen}"/>
             </MenuItem>
             <MenuItem Header="_Edit">
                 <MenuItem Header="_Add Question" InputGestureText="Ctrl+A"/>
