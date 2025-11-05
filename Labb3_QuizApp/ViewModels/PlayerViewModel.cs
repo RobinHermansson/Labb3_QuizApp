@@ -18,13 +18,14 @@ class PlayerViewModel : ViewModelBase
     {
         get
         {
+            /*
             if (_questionViewModels != null && 
                 QuestionSet >= 0 && 
                 QuestionSet < _questionViewModels.Count)
             {
                 return _questionViewModels[QuestionSet];
-            }
-            return null;
+            }*/
+            return new QuestionViewModel(ActivePack.Questions.FirstOrDefault(q => q.Query is not null));
         }
     }
     public int QuestionSet
