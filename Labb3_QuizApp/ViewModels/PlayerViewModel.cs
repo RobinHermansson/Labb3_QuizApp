@@ -1,5 +1,7 @@
 ﻿using Labb3_QuizApp.Command;
+using Labb3_QuizApp.Views;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Labb3_QuizApp.ViewModels;
 
@@ -8,12 +10,24 @@ class PlayerViewModel : ViewModelBase
     private readonly MainWindowViewModel? _mainWindowViewModel;
 
     public DelegateCommand SetPackNameCommand { get; }
+    public DelegateCommand PlayGameCommand { get; }
     public QuestionPackViewModel ActivePack { get => _mainWindowViewModel.ActivePack; }
 
     private int _questionSet = 0;
 
     private List<QuestionViewModel> _questionViewModels;
-    
+
+    private string _currentQuestionOutOfTotal = "";
+    public string CurrentQuestionOutOfTotal
+    {
+        get => _currentQuestionOutOfTotal;
+        set
+        {
+            _currentQuestionOutOfTotal = value;
+            RaisePropertyChanged();
+        }
+            
+    }
     public QuestionViewModel CurrentQuestion
     {
         get
@@ -25,6 +39,13 @@ class PlayerViewModel : ViewModelBase
             {
                 return _questionViewModels[QuestionSet];
             }*/
+            _questionViewModels = ActivePack.Questions
+                .Select(q => new QuestionViewModel(q))
+                .ToList();
+            var questions = _questionViewModels[QuestionSet];
+            Random random = new Random();
+            int maxSelectionAvailable = 4;
+
             return new QuestionViewModel(ActivePack.Questions.FirstOrDefault(q => q.Query is not null));
         }
     }
@@ -42,8 +63,9 @@ class PlayerViewModel : ViewModelBase
     {
         _mainWindowViewModel = mainWindowViewModel;
         SetPackNameCommand = new DelegateCommand(SetPackName, CanSetPackName);
+        PlayGameCommand = new DelegateCommand(PlayGame, CanPlayGame);
         DemoText = string.Empty;
-        PlayGame();
+        
     }
 
     private string _demoText;
@@ -77,13 +99,20 @@ class PlayerViewModel : ViewModelBase
         }
     }
 
-    private void PlayGame()
+    private void PlayGame(object? arg)
     {
-        if (ActivePack?.Questions != null)
-        {
-            _questionViewModels = ActivePack.Questions
-                .Select(q => new QuestionViewModel(q))
-                .ToList();
-        }
+        _questionViewModels = ActivePack.Questions
+            .Select(q => new QuestionViewModel(q))
+            .ToList();
+
+        string test = _questionViewModels[0].Query;
+        CurrentQuestionOutOfTotal = $"Question {QuestionSet} out of {ActivePack.Questions.Count}";
+        MessageBox.Show(test);
+        
+    }
+
+    private bool CanPlayGame(object? arg)
+    {
+        return true;
     }
 }

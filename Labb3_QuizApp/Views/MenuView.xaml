@@ -20,7 +20,9 @@
                 <MenuItem Header="_Remove Question"/>
                 <MenuItem Header="Set Packname" 
                           Command="{Binding PlayerViewModel.SetPackNameCommand}"/>
-
+            </MenuItem>
+            <MenuItem Header="_View">
+                <MenuItem Header="_Play" Command="{Binding PlayerViewModel.PlayGameCommand}"/>
             </MenuItem>
         </Menu>
     </Grid>

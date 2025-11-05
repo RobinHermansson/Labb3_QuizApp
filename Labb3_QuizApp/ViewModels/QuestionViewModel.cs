@@ -4,7 +4,7 @@ namespace Labb3_QuizApp.ViewModels;
 class QuestionViewModel : ViewModelBase
 {
 
-    private Question _question; 
+    private Question _question;
     public Question Question
     {
         get => _question;
@@ -23,6 +23,7 @@ class QuestionViewModel : ViewModelBase
     public string Query => _question.Query;
 
     public string CorrectAnswer => _question.CorrectAnswer;
+    public string[] QuestionsCombined => new string[] { CorrectAnswer, IncorrectAnswers[0], IncorrectAnswers[1], IncorrectAnswers[2] };
 
     public string[] IncorrectAnswers => _question.IncorrectAnswers;
     public QuestionViewModel(Question model)
