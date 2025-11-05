@@ -1,5 +1,6 @@
 ﻿using Labb3_QuizApp.Models;
 using Labb3_QuizApp.Services;
+using Labb3_QuizApp.Views;
 using System.Collections.ObjectModel;
 using System.Windows;
 
