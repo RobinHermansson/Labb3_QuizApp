@@ -1,7 +1,6 @@
 ﻿using Labb3_QuizApp.Command;
-using Labb3_QuizApp.Views;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace Labb3_QuizApp.ViewModels;
 
@@ -15,6 +14,18 @@ class PlayerViewModel : ViewModelBase
 
     private int _questionSet = 0;
 
+    private int _timerText = 30;
+
+    public int TimerText
+    {
+        get => _timerText; 
+        set 
+        { 
+            _timerText = value;
+            RaisePropertyChanged();
+        }
+    }
+
     private List<QuestionViewModel> _questionViewModels;
 
     private string _currentQuestionOutOfTotal = "";
@@ -26,7 +37,7 @@ class PlayerViewModel : ViewModelBase
             _currentQuestionOutOfTotal = value;
             RaisePropertyChanged();
         }
-            
+
     }
     public QuestionViewModel CurrentQuestion
     {
@@ -65,7 +76,16 @@ class PlayerViewModel : ViewModelBase
         SetPackNameCommand = new DelegateCommand(SetPackName, CanSetPackName);
         PlayGameCommand = new DelegateCommand(PlayGame, CanPlayGame);
         DemoText = string.Empty;
-        
+
+        var timer = new DispatcherTimer();
+        timer.Interval = TimeSpan.FromSeconds(1.0);
+        timer.Tick += Timer_Tick;
+        timer.Start();
+    }
+
+    private void Timer_Tick(object? sender, EventArgs e)
+    {
+        TimerText -= 1;
     }
 
     private string _demoText;
@@ -108,7 +128,7 @@ class PlayerViewModel : ViewModelBase
         string test = _questionViewModels[0].Query;
         CurrentQuestionOutOfTotal = $"Question {QuestionSet} out of {ActivePack.Questions.Count}";
         MessageBox.Show(test);
-        
+
     }
 
     private bool CanPlayGame(object? arg)

@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <Label Grid.Row="0" 
                x:Name="CountdownTimer" 
-               Content="30" 
+               Content="{Binding TimerText}" 
                HorizontalAlignment="Right" 
                VerticalAlignment="Top" 
                FontSize="30" 

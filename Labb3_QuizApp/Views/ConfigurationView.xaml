@@ -24,21 +24,29 @@
             <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="center"  Content="2" Margin="5 0 0 0"/>
             <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="center"  Content="3" Margin="5 0 0 0"/>
         </StackPanel>
-        <ListBox Grid.Row="1" Grid.ColumnSpan="2" Margin="5 0 0 5">
-            <ListBoxItem Content="Test"></ListBoxItem>
+        <ListBox Grid.Row="1" Grid.ColumnSpan="2" Margin="5 0 0 5" ItemsSource="{Binding ActivePack.Questions}" SelectedItem="{Binding SelectedQuestion, UpdateSourceTrigger=PropertyChanged}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="Question:" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Query}"/>
+                    </StackPanel>
+                </DataTemplate>
+               
+            </ListBox.ItemTemplate>
         </ListBox>
 
         <StackPanel Grid.Column="2" Grid.RowSpan="2">
             <Label FontWeight="Bold" Content="Question:" Margin="20 15 0 0"/>
-            <TextBox Text=" " TextWrapping="Wrap" AcceptsReturn="True" MinHeight="200" Margin="20 0 20 20"></TextBox>
+            <TextBox Text="{Binding SelectedQuestion.Query, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" MinHeight="200" Margin="20 0 20 20"></TextBox>
             <Label FontWeight="Bold" Content="Correct Answer:"  Margin="15 0 20 0"></Label>
-            <TextBox Text=" " Margin="20 0 20 0"></TextBox>
+            <TextBox Text="{Binding SelectedQuestion.CorrectAnswer, UpdateSourceTrigger=PropertyChanged}" Margin="20 0 20 0"></TextBox>
             <Label FontWeight="Bold" Content="First Incorrect Answer:"  Margin="15 0 20 0"></Label>
-            <TextBox Text=" " Margin="20 0 20 0"></TextBox>
+            <TextBox Text="{Binding SelectedQuestion.IncorrectAnswers[0], UpdateSourceTrigger=PropertyChanged}" Margin="20 0 20 0"></TextBox>
             <Label FontWeight="Bold" Content="Second Incorrect Answer:"  Margin="15 0 20 0"></Label>
-            <TextBox Text=" " Margin="20 0 20 0"></TextBox>
+            <TextBox Text="{Binding SelectedQuestion.IncorrectAnswers[1], UpdateSourceTrigger=PropertyChanged}" Margin="20 0 20 0"></TextBox>
             <Label FontWeight="Bold" Content="Third Incorrect Answer:"  Margin="15 0 20 0"></Label>
-            <TextBox Text=" " Margin="20 0 20 0"></TextBox>
+            <TextBox Text="{Binding SelectedQuestion.IncorrectAnswers[2], UpdateSourceTrigger=PropertyChanged}" Margin="20 0 20 0"></TextBox>
         </StackPanel>
     </Grid>
 </UserControl>
