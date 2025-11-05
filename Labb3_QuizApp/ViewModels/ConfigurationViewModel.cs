@@ -1,5 +1,6 @@
 ﻿using Labb3_QuizApp.Command;
 using Labb3_QuizApp.Models;
+using System.Windows.Forms;
 
 namespace Labb3_QuizApp.ViewModels;
 
@@ -9,7 +10,8 @@ class ConfigurationViewModel : ViewModelBase
     public QuestionPackViewModel ActivePack => _mainWindowViewModel.ActivePack;
 
     public DelegateCommand AddNewQuestionCommand { get; }
-    
+    public DelegateCommand RemoveSelectedQuestionCommand { get; }
+
     private Question _selectedQuestion;
     public Question SelectedQuestion
     {
@@ -24,6 +26,7 @@ class ConfigurationViewModel : ViewModelBase
     {
         _mainWindowViewModel = mainWindowViewModel;
         AddNewQuestionCommand = new DelegateCommand(AddNewQuestion, CanAddNewQuestion);
+        RemoveSelectedQuestionCommand = new DelegateCommand(RemoveSelectedQuestion, CanRemoveSelectedQuestion);
     }
 
     public void AddNewQuestion(object? arg)
@@ -33,5 +36,17 @@ class ConfigurationViewModel : ViewModelBase
     public bool CanAddNewQuestion(object? arg)
     {
         return true;
+    }
+    public void RemoveSelectedQuestion(object? arg)
+    {
+        ActivePack.Questions.Remove(SelectedQuestion);
+    }
+    public bool CanRemoveSelectedQuestion(object? arg)
+    {
+        if (arg is Question)
+        {
+            return true;
+        }
+        return false;
     }
 }
