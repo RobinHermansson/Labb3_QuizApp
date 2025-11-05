@@ -1,7 +1,7 @@
 ﻿
 namespace Labb3_QuizApp.Models;
 
-internal class Question
+public class Question
 {
     public Question(string query, string correctAnwer, string incorrectAnswer1, 
         string incorrectAnswer2, string incorrectAnswer3)
