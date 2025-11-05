@@ -22,7 +22,8 @@
                           Command="{Binding PlayerViewModel.SetPackNameCommand}"/>
             </MenuItem>
             <MenuItem Header="_View">
-                <MenuItem Header="_Play" Command="{Binding PlayerViewModel.PlayGameCommand}"/>
+                <MenuItem Header="_Play" Command="{Binding SwitchToPlayerViewCommand}"/>
+                <MenuItem Header="_Configure" Command="{Binding SwitchToConfigurationViewCommand}"/>
             </MenuItem>
         </Menu>
     </Grid>

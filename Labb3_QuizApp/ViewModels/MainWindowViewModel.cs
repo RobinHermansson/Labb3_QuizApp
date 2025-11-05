@@ -1,4 +1,5 @@
-﻿using Labb3_QuizApp.Models;
+﻿using Labb3_QuizApp.Command;
+using Labb3_QuizApp.Models;
 using Labb3_QuizApp.Services;
 using Labb3_QuizApp.Views;
 using System.Collections.ObjectModel;
@@ -11,6 +12,9 @@ internal class MainWindowViewModel: ViewModelBase
 {
     public ObservableCollection<QuestionPackViewModel> Packs { get; } = new();
 	private QuestionPackViewModel _activePack;
+
+	public DelegateCommand SwitchToPlayerViewCommand { get; }
+	public DelegateCommand SwitchToConfigurationViewCommand { get; }
 
 	private PlayerView _playerView;
 
@@ -64,6 +68,9 @@ internal class MainWindowViewModel: ViewModelBase
 		ConfigurationViewModel = new ConfigurationViewModel(this);
 		QuestionPackGeneratorAPIService = new QuestionPackGeneratorAPIService();
 
+		SwitchToConfigurationViewCommand = new DelegateCommand(SwitchToConfigurationView);
+		SwitchToPlayerViewCommand = new DelegateCommand(SwitchToPlayerView);
+
 		CurrentView = new ConfigurationView();
 
 		var pack = new QuestionPack("MyQuestionPack");
@@ -73,11 +80,11 @@ internal class MainWindowViewModel: ViewModelBase
 	
     }
 
-	public void SwitchToPlayerView()
+	public void SwitchToPlayerView(object? arg)
 	{
 		CurrentView = new PlayerView();
 	}
-	public void SwitchToConfigurationView()
+	public void SwitchToConfigurationView(object? arg)
 	{
 		CurrentView = new ConfigurationView();
 	}
