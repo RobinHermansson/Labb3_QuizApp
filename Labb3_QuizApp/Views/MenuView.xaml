@@ -16,10 +16,9 @@
                 <MenuItem Header="E_xit" Icon="{fa:Icon DoorOpen}"/>
             </MenuItem>
             <MenuItem Header="_Edit">
-                <MenuItem Header="_Add Question" InputGestureText="Ctrl+A"/>
-                <MenuItem Header="_Remove Question"/>
-                <MenuItem Header="Set Packname" 
-                          Command="{Binding PlayerViewModel.SetPackNameCommand}"/>
+                <MenuItem Header="_Add Question" Icon="{fa:Icon plus}" InputGestureText="Ctrl+A"/>
+                <MenuItem Header="_Remove Question" Icon="{fa:Icon minus}"/>
+                <MenuItem Header="_Pack Options" Icon="{fa:Icon gear}" Command="{Binding ConfigurationViewModel.OpenOptionsWindowCommand}"/>
             </MenuItem>
             <MenuItem Header="_View">
                 <MenuItem Header="_Play" Command="{Binding SwitchToPlayerViewCommand}"/>
