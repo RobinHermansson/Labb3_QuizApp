@@ -18,6 +18,8 @@ class ConfigurationViewModel : ViewModelBase
     public DelegateCommand AddNewQuestionCommand { get; }
     public DelegateCommand RemoveSelectedQuestionCommand { get; }
 
+
+
     private Question _selectedQuestion;
     public Question SelectedQuestion
     {

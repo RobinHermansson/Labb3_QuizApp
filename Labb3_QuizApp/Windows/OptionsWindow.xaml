@@ -47,8 +47,8 @@
                 Margin="5 0 10 0"
             />
             <ComboBox 
-                ItemsSource="{Binding Difficulty}" 
-                DisplayMemberPath="Difficulty"
+                ItemsSource="{Binding DifficultyValues}"
+                SelectedItem="{Binding SelectedDifficulty, UpdateSourceTrigger=PropertyChanged}"
                 Margin="10 0 10 0"
                 Width="180"
             />

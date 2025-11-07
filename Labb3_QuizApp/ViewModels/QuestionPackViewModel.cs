@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 namespace Labb3_QuizApp.ViewModels;
 
-internal class QuestionPackViewModel: ViewModelBase
+internal class QuestionPackViewModel : ViewModelBase
 {
     private readonly QuestionPack _model;
 
@@ -24,6 +24,26 @@ internal class QuestionPackViewModel: ViewModelBase
             _model.Questions[e.OldStartingIndex] = (Question)e.NewItems[0]!;
         if (e.Action == NotifyCollectionChangedAction.Reset)
             _model.Questions.Clear();
+    }
+
+    public Array DifficultyValues
+    {
+        get
+        {
+            return Enum.GetValues(typeof(Difficulty));
+        }
+    }
+
+    private Difficulty _selectedDifficulty;
+    public Difficulty SelectedDifficulty
+    {
+        get => _selectedDifficulty;
+        set
+        {
+            _selectedDifficulty = value;
+            _model.Difficulty = value; // hope this works to set it directly on selection.
+            RaisePropertyChanged();
+        }
     }
 
 

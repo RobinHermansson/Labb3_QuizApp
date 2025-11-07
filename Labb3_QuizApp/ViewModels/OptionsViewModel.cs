@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Labb3_QuizApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
