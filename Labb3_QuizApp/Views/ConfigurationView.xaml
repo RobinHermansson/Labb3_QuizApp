@@ -19,7 +19,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-            <Label Grid.Row="0" FontWeight="Bold" Content="Default Question Pack"></Label>
+            <Label Grid.Row="0" FontWeight="Bold" Content="{Binding ActivePack.Name}"></Label>
         <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="center"  Content="{fa:Icon plus}" Margin="5 0 0 0" Command="{Binding AddNewQuestionCommand}"/>
             <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="center"  Content="{fa:Icon minus}" Margin="5 0 0 0" Command="{Binding RemoveSelectedQuestionCommand}" CommandParameter="{Binding ElementName=questionListBox, Path=SelectedItem}"/>
