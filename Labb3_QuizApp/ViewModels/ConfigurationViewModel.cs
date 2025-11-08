@@ -1,5 +1,6 @@
 ﻿using Labb3_QuizApp.Command;
 using Labb3_QuizApp.Models;
+using Labb3_QuizApp.Services;
 using Labb3_QuizApp.Views;
 using Labb3_QuizApp.Windows;
 using System.Windows.Forms;
@@ -17,6 +18,7 @@ class ConfigurationViewModel : ViewModelBase
 
     public DelegateCommand AddNewQuestionCommand { get; }
     public DelegateCommand RemoveSelectedQuestionCommand { get; }
+    public PackHandlerService PackHandlerService { get; }
 
 
 
@@ -38,6 +40,8 @@ class ConfigurationViewModel : ViewModelBase
 
         AddNewQuestionCommand = new DelegateCommand(AddNewQuestion, CanAddNewQuestion);
         RemoveSelectedQuestionCommand = new DelegateCommand(RemoveSelectedQuestion, CanRemoveSelectedQuestion);
+        PackHandlerService = new PackHandlerService();
+
     }
 
     public void AddNewQuestion(object? arg)

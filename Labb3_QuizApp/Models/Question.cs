@@ -12,6 +12,11 @@ public class Question
         IncorrectAnswers = [incorrectAnswer1, incorrectAnswer2, incorrectAnswer3];
         
     }
+
+    public Question()
+    {
+        
+    }
     public string Query { get; set; }
 
     public string CorrectAnswer { get; set; }

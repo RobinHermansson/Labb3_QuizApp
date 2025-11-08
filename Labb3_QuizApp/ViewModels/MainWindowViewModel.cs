@@ -67,16 +67,21 @@ internal class MainWindowViewModel: ViewModelBase
 		PlayerViewModel = new PlayerViewModel(this);
 		ConfigurationViewModel = new ConfigurationViewModel(this);
 		QuestionPackGeneratorAPIService = new QuestionPackGeneratorAPIService();
+		PackHandlerService PackHandler = new PackHandlerService();
 
 		SwitchToConfigurationViewCommand = new DelegateCommand(SwitchToConfigurationView);
 		SwitchToPlayerViewCommand = new DelegateCommand(SwitchToPlayerView);
 
 		CurrentView = new ConfigurationView();
 
-		var pack = new QuestionPack("MyQuestionPack");
+		var allPacks = PackHandler.LoadAllPacks();
+
+		ActivePack = new QuestionPackViewModel(allPacks[0]);
+
+		/*var pack = new QuestionPack("MyQuestionPack");
 		ActivePack = new QuestionPackViewModel(pack);
 		ActivePack.Questions.Add(new Question("What is 1 + 1?", "2", "3", "4", "5"));
-		ActivePack.Questions.Add(new Question("How though?", "Just because", "Unknown", "FIve.", "Yeah."));
+		ActivePack.Questions.Add(new Question("How though?", "Just because", "Unknown", "FIve.", "Yeah."));*/
 	
     }
 

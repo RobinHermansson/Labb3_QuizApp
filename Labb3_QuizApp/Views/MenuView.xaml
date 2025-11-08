@@ -11,6 +11,13 @@
         <Menu>
             <MenuItem Header="_File">
                 <MenuItem Header="_New Question Pack" Icon="{fa:Icon File}"/>
+                <MenuItem Header="_Select Question Pack"/>
+                <!--MenuItem.ItemTemplate>
+                    <DataTemplate>
+                        <MenuItem ItemSource="{Binding AvailablePacks}"/>
+                    </DataTemplate>
+                </MenuItem.ItemTemplate>
+                <MenuItem /-->
                 <MenuItem Header="_Delete Question Pack"/>
                 <Separator/>
                 <MenuItem Header="E_xit" Icon="{fa:Icon DoorOpen}"/>
