@@ -10,14 +10,19 @@
     <Grid>
         <Menu>
             <MenuItem Header="_File">
-                <MenuItem Header="_New Question Pack" Icon="{fa:Icon File}"/>
-                <MenuItem Header="_Select Question Pack"/>
-                <!--MenuItem.ItemTemplate>
-                    <DataTemplate>
-                        <MenuItem ItemSource="{Binding AvailablePacks}"/>
-                    </DataTemplate>
-                </MenuItem.ItemTemplate>
-                <MenuItem /-->
+                <MenuItem Header="_New Question Pack" Icon="{fa:Icon File}" Command="{Binding CreateNewPackCommand}"/>
+                <MenuItem Header="_Select Question Pack" ItemsSource="{Binding Packs}">
+                    <MenuItem.ItemContainerStyle>
+                        <Style TargetType="MenuItem">
+                            <Setter Property="Header" Value="{Binding Name}"/>
+                            <Setter Property="Command" 
+                    Value="{Binding Path=DataContext.SelectNewActivePackCommand, 
+                             RelativeSource={RelativeSource AncestorType=MenuItem, 
+                                            AncestorLevel=2}}"/>
+                            <Setter Property="CommandParameter" Value="{Binding}"/>
+                        </Style>
+                    </MenuItem.ItemContainerStyle>
+                </MenuItem>
                 <MenuItem Header="_Delete Question Pack"/>
                 <Separator/>
                 <MenuItem Header="E_xit" Icon="{fa:Icon DoorOpen}"/>

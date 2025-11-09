@@ -13,6 +13,10 @@ internal class QuestionPackViewModel : ViewModelBase
         Questions = new ObservableCollection<Question>(_model.Questions);
         Questions.CollectionChanged += Questions_CollectionChanged;
     }
+    public QuestionPackViewModel()
+    {
+        
+    }
 
     private void Questions_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {

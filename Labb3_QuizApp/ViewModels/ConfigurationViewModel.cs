@@ -1,9 +1,7 @@
 ﻿using Labb3_QuizApp.Command;
 using Labb3_QuizApp.Models;
 using Labb3_QuizApp.Services;
-using Labb3_QuizApp.Views;
 using Labb3_QuizApp.Windows;
-using System.Windows.Forms;
 
 namespace Labb3_QuizApp.ViewModels;
 
@@ -71,6 +69,6 @@ class ConfigurationViewModel : ViewModelBase
         var optionsWindow = new OptionsWindow();
         optionsWindow.DataContext = ActivePack;
         optionsWindow.ShowDialog();
-        
+
     }
 }
