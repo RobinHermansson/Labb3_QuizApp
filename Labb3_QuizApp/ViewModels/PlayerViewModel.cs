@@ -164,11 +164,26 @@ class PlayerViewModel : ViewModelBase
     private void SelectAnswer(object? answer)
     {
         if (answer == null) return;
-        
-        // Mark all answers
-        foreach (var option in CurrentQuestion.AnswerOptions)
+        _timer.Stop();
+
+        if (answer is AnswerOptionViewModel asModel)
         {
-            option.State = option.IsCorrect ? AnswerState.Correct : AnswerState.Incorrect;
+            bool isCorrectAnswer = asModel.IsCorrect;
+
+
+            // Mark all answers
+            foreach (var option in CurrentQuestion.AnswerOptions)
+            {
+                //option.State = option.IsCorrect ? AnswerState.Correct : AnswerState.Incorrect;
+                if (isCorrectAnswer)
+                {
+                    option.State = option == asModel ? AnswerState.Correct : AnswerState.Neutral;
+                }
+                else
+                {
+                    option.State = option.IsCorrect ? AnswerState.Correct : AnswerState.Incorrect;
+                }
+            }
         }
 
         // Add delay before moving to next question
