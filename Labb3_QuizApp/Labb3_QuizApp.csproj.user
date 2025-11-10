@@ -11,6 +11,9 @@
     <Compile Update="Views\PlayerView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Windows\ExternalImportOptionsWIndow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Windows\OptionsWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
