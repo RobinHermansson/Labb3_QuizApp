@@ -84,7 +84,6 @@ class PlayerViewModel : ViewModelBase
     {
         _mainWindowViewModel = mainWindowViewModel;
         PlayGameCommand = new DelegateCommand(PlayGame, CanPlayGame);
-        //CheckAnswerAndProceedCommand = new DelegateCommand(CheckAnswerAndProceed);
 
         SelectAnswerCommand = new DelegateCommand(SelectAnswer);
 
@@ -103,30 +102,24 @@ class PlayerViewModel : ViewModelBase
         {
             _timer.Stop();
             
-            // Mark all answers - time's up!
             foreach (var option in CurrentQuestion.AnswerOptions)
             {
                 option.State = option.IsCorrect ? AnswerState.Correct : AnswerState.Incorrect;
             }
             
-            // Auto-advance after delay
             StartDelayedAdvance();
         }
     }
     private void ResetTimer()
     {
-        // Stop any existing timer
         _timer.Stop();
         
-        // Reset the time
         TimerText = _initialTimerValue;
         
-        // Restart timer
         _timer.Start();
     }
     private void StartDelayedAdvance()
     {
-        // Create a separate timer for advancing to next question
         var advanceTimer = new DispatcherTimer();
         advanceTimer.Interval = TimeSpan.FromSeconds(2);
         advanceTimer.Tick += (s, e) => {
@@ -134,15 +127,6 @@ class PlayerViewModel : ViewModelBase
             NextQuestion();
         };
         advanceTimer.Start();
-    }
-
-    private void NextQuestionSet()
-    {
-        if (ActivePack?.Questions != null && QuestionSet < ActivePack.Questions.Count - 1)
-        {
-            QuestionSet++;
-
-        }
     }
 
     public void PlayGame(object? arg)
@@ -183,10 +167,8 @@ class PlayerViewModel : ViewModelBase
                 CorrectlyAnsweredCount += 1;
             }
 
-            // Mark all answers
             foreach (var option in CurrentQuestion.AnswerOptions)
             {
-                //option.State = option.IsCorrect ? AnswerState.Correct : AnswerState.Incorrect;
                 if (isCorrectAnswer)
                 {
                     option.State = option == asModel ? AnswerState.Correct : AnswerState.Neutral;
@@ -198,7 +180,6 @@ class PlayerViewModel : ViewModelBase
             }
         }
         
-        // Add delay before moving to next question
         StartDelayedAdvance();
     }
 
@@ -211,7 +192,6 @@ class PlayerViewModel : ViewModelBase
         }
         else
         {
-            // Quiz finished
             _timer.Stop();
             MessageBox.Show($"Quiz completed! You got {CorrectlyAnsweredCount} correct!");
         }
