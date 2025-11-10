@@ -37,48 +37,34 @@
                        HorizontalAlignment="Center"
                        VerticalAlignment="Bottom"/>
         </StackPanel>
-        <ItemsControl Grid.Row="2" ItemsSource="{Binding CurrentQuestion.AnswerOptions}">
+        <ItemsControl Grid.Row="2" ItemsSource="{Binding CurrentQuestion.AnswerOptions}" 
+              HorizontalAlignment="Center" VerticalAlignment="Center">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Button Content="{Binding Text}" 
-                            Margin="10" 
-                            Padding="20"
+                            Margin="10"
+                            Padding="15"
+                            MinWidth="200"
+                            MinHeight="75"
                             Command="{Binding DataContext.SelectAnswerCommand, 
                                       RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                             CommandParameter="{Binding}"
-                            Background="{Binding State, Converter={StaticResource AnswerToStateConverter}}"/>
+                            Background="{Binding State, Converter={StaticResource AnswerToStateConverter}}">
+                        <Button.ContentTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" TextWrapping="Wrap" TextAlignment="Center"/>
+                            </DataTemplate>
+                        </Button.ContentTemplate>
+                    </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel />
+                    <UniformGrid Columns="2" Rows="2"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
         
-        <!--StackPanel Grid.Row="2" Margin="10 10 10 10">
-            <StackPanel x:Name="FirstStackPanel" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button Content="{Binding CurrentQuestion.QuestionsCombined[0]}" 
-                        Margin="10 10 10 0" Padding="20" Background="{Binding ButtonColor}"
-                        Command="{Binding CheckAnswerAndProceedCommand}" 
-                        CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
-                <Button Content="{Binding CurrentQuestion.QuestionsCombined[1]}"
-                        Margin="10 10 10 0" Padding="20" Background="{Binding ButtonColor}"
-                        Command="{Binding CheckAnswerAndProceedCommand}" 
-                        CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
-            </StackPanel>
-            <StackPanel x:Name="SecondStackPanel" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 10 10 10">
-                <Button Content="{Binding CurrentQuestion.QuestionsCombined[2]}"
-                        Margin="10 10 10 0" Padding="20" Background="{Binding ButtonColor}"
-                        Command="{Binding CheckAnswerAndProceedCommand}" 
-                        CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
-                <Button Content="{Binding CurrentQuestion.QuestionsCombined[3]}"
-                        Margin="10 10 10 0" Padding="20" Background="{Binding ButtonColor}"
-                        Command="{Binding CheckAnswerAndProceedCommand}"
-                        CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
-            </StackPanel>
-        </StackPanel-->
-
-    </Grid>
+     </Grid>
 </UserControl>
     
