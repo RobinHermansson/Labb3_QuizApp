@@ -18,6 +18,7 @@ internal class MainWindowViewModel : ViewModelBase
     public DelegateCommand SwitchToConfigurationViewCommand { get; }
     public DelegateCommand CreateNewPackCommand { get; }
     
+    public DelegateCommand DeleteActivePackCommand { get; }
     private QuestionPackViewModel _selectedPack;
     public QuestionPackViewModel SelectedPack
     {
@@ -94,6 +95,7 @@ internal class MainWindowViewModel : ViewModelBase
         SwitchToPlayerViewCommand = new DelegateCommand(SwitchToPlayerView);
 
         SelectNewActivePackCommand = new DelegateCommand(SelectNewActivePack);
+        DeleteActivePackCommand = new DelegateCommand(DeleteActivePack);
 
         CurrentView = new ConfigurationView();
 
@@ -125,6 +127,18 @@ internal class MainWindowViewModel : ViewModelBase
     public void SelectNewActivePack(object? arg)
     {
         ActivePack = (QuestionPackViewModel)arg;
+    }
+    public void DeleteActivePack(object? arg)
+    {
+        Packs.Remove(ActivePack);
+        if (Packs.Count != 0)
+        {
+            ActivePack = Packs[0];
+        }
+        else
+        {
+            ActivePack = new QuestionPackViewModel(new QuestionPack("NewDefaultPack"));
+        }
     }
 
 }

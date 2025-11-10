@@ -23,7 +23,7 @@
                         </Style>
                     </MenuItem.ItemContainerStyle>
                 </MenuItem>
-                <MenuItem Header="_Delete Question Pack"/>
+                <MenuItem Header="_Delete Question Pack" Command="{Binding DeleteActivePackCommand}"/>
                 <Separator/>
                 <MenuItem Header="E_xit" Icon="{fa:Icon DoorOpen}"/>
             </MenuItem>
