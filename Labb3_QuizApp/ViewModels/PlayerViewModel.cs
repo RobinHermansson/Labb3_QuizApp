@@ -18,6 +18,15 @@ class PlayerViewModel : ViewModelBase
     public QuestionPackViewModel ActivePack { get => _mainWindowViewModel.ActivePack; }
     public DelegateCommand SelectAnswerCommand { get; }
 
+    private int _correctlyAnsweredCount = 0;
+
+    public int CorrectlyAnsweredCount
+    {
+        get { return _correctlyAnsweredCount; }
+        set { _correctlyAnsweredCount = value; }
+    }
+
+
     public QuestionViewModel CurrentQuestionViewModel;
 
     private int _questionSet = 0;
@@ -169,7 +178,10 @@ class PlayerViewModel : ViewModelBase
         if (answer is AnswerOptionViewModel asModel)
         {
             bool isCorrectAnswer = asModel.IsCorrect;
-
+            if (isCorrectAnswer)
+            {
+                CorrectlyAnsweredCount += 1;
+            }
 
             // Mark all answers
             foreach (var option in CurrentQuestion.AnswerOptions)
@@ -185,7 +197,7 @@ class PlayerViewModel : ViewModelBase
                 }
             }
         }
-
+        
         // Add delay before moving to next question
         StartDelayedAdvance();
     }
@@ -201,7 +213,7 @@ class PlayerViewModel : ViewModelBase
         {
             // Quiz finished
             _timer.Stop();
-            MessageBox.Show("Quiz completed!");
+            MessageBox.Show($"Quiz completed! You got {CorrectlyAnsweredCount} correct!");
         }
     }
 }
