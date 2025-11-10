@@ -13,11 +13,6 @@ class QuestionViewModel : ViewModelBase
         {
             _question = value;
             RaisePropertyChanged();
-            /*
-            RaisePropertyChanged(nameof(Query));
-            RaisePropertyChanged(nameof(CorrectAnswer));
-            RaisePropertyChanged(nameof(IncorrectAnswers));
-            */
         }
     }
     public ObservableCollection<AnswerOptionViewModel> AnswerOptions { get; } = new();
@@ -58,8 +53,6 @@ class QuestionViewModel : ViewModelBase
                 IsCorrect = answer == question.CorrectAnswer
             });
         }
-        //_questionsCombined = [_question.CorrectAnswer, _question.IncorrectAnswers[0], _question.IncorrectAnswers[1], _question.IncorrectAnswers[2]];
-        //Random.Shared.Shuffle(_questionsCombined);
     }
 
 }
