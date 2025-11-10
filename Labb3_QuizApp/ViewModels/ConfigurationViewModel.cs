@@ -44,7 +44,7 @@ class ConfigurationViewModel : ViewModelBase
 
     public void AddNewQuestion(object? arg)
     {
-        ActivePack.Questions.Add(new Question("Test new", "Correct test", "Incorrect1", "Incorrect2", "incorrect3"));
+        ActivePack.Questions.Add(new Question("<New Question>", "", "", "", ""));
     }
     public bool CanAddNewQuestion(object? arg)
     {
