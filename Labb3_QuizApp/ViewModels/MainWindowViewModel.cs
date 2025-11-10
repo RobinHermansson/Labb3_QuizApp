@@ -106,6 +106,7 @@ internal class MainWindowViewModel : ViewModelBase
     public void SwitchToPlayerView(object? arg)
     {
         CurrentView = new PlayerView();
+        PlayerViewModel.PlayGame(arg);
     }
     public void SwitchToConfigurationView(object? arg)
     {

@@ -73,42 +73,13 @@ class PlayerViewModel : ViewModelBase
     public PlayerViewModel(MainWindowViewModel? mainWindowViewModel)
     {
         _mainWindowViewModel = mainWindowViewModel;
-        SetPackNameCommand = new DelegateCommand(SetPackName, CanSetPackName);
         PlayGameCommand = new DelegateCommand(PlayGame, CanPlayGame);
-        DemoText = string.Empty;
 
-        var timer = new DispatcherTimer();
-        timer.Interval = TimeSpan.FromSeconds(1.0);
-        timer.Tick += Timer_Tick;
-        timer.Start();
     }
 
     private void Timer_Tick(object? sender, EventArgs e)
     {
         TimerText -= 1;
-    }
-
-    private string _demoText;
-
-    public string DemoText
-    {
-        get => _demoText;
-        set
-        {
-            _demoText = value;
-            RaisePropertyChanged();
-            SetPackNameCommand.RaiseCanExecuteChanged();
-        }
-    }
-
-    private bool CanSetPackName(object? arg)
-    {
-        return DemoText.Length > 0;
-    }
-
-    private void SetPackName(object? obj)
-    {
-        ActivePack.Name = DemoText;
     }
 
     private void NextQuestionSet()
@@ -119,15 +90,20 @@ class PlayerViewModel : ViewModelBase
         }
     }
 
-    private void PlayGame(object? arg)
+    public void PlayGame(object? arg)
     {
+
+        var timer = new DispatcherTimer();
+        timer.Interval = TimeSpan.FromSeconds(1.0);
+        timer.Tick += Timer_Tick;
+        timer.Start();
+
         _questionViewModels = ActivePack.Questions
             .Select(q => new QuestionViewModel(q))
             .ToList();
 
         string test = _questionViewModels[0].Query;
         CurrentQuestionOutOfTotal = $"Question {QuestionSet} out of {ActivePack.Questions.Count}";
-        MessageBox.Show(test);
 
     }
 
