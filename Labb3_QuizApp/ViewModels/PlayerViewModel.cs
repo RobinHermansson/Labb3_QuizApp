@@ -22,6 +22,8 @@ class PlayerViewModel : ViewModelBase
 
     private int _questionSet = 0;
 
+    private DispatcherTimer _timer;
+    private int _initialTimerValue = 30;
     private int _timerText = 30;
 
     public int TimerText
@@ -76,6 +78,10 @@ class PlayerViewModel : ViewModelBase
         //CheckAnswerAndProceedCommand = new DelegateCommand(CheckAnswerAndProceed);
 
         SelectAnswerCommand = new DelegateCommand(SelectAnswer);
+
+        _timer = new DispatcherTimer();
+        _timer.Interval = TimeSpan.FromSeconds(1.0);
+        _timer.Tick += Timer_Tick;
         
 
     }
@@ -83,6 +89,42 @@ class PlayerViewModel : ViewModelBase
     private void Timer_Tick(object? sender, EventArgs e)
     {
         TimerText -= 1;
+
+        if (TimerText <= 0)
+        {
+            _timer.Stop();
+            
+            // Mark all answers - time's up!
+            foreach (var option in CurrentQuestion.AnswerOptions)
+            {
+                option.State = option.IsCorrect ? AnswerState.Correct : AnswerState.Incorrect;
+            }
+            
+            // Auto-advance after delay
+            StartDelayedAdvance();
+        }
+    }
+    private void ResetTimer()
+    {
+        // Stop any existing timer
+        _timer.Stop();
+        
+        // Reset the time
+        TimerText = _initialTimerValue;
+        
+        // Restart timer
+        _timer.Start();
+    }
+    private void StartDelayedAdvance()
+    {
+        // Create a separate timer for advancing to next question
+        var advanceTimer = new DispatcherTimer();
+        advanceTimer.Interval = TimeSpan.FromSeconds(2);
+        advanceTimer.Tick += (s, e) => {
+            advanceTimer.Stop();
+            NextQuestion();
+        };
+        advanceTimer.Start();
     }
 
     private void NextQuestionSet()
@@ -97,22 +139,7 @@ class PlayerViewModel : ViewModelBase
     public void PlayGame(object? arg)
     {
 
-        var timer = new DispatcherTimer();
-        timer.Interval = TimeSpan.FromSeconds(1.0);
-        timer.Tick += Timer_Tick;
-        timer.Start();
-
-        /*
-        _questionViewModels = ActivePack.Questions
-            .Select(q => new QuestionViewModel(q))
-            .ToList();
-
-        string test = _questionViewModels[0].Query;
-        */
-        // Initialize first question
         LoadCurrentQuestion();
-        CurrentQuestionOutOfTotal = $"Question {QuestionSet+1} out of {ActivePack.Questions.Count}";
-        //Random.Shared.Shuffle(CurrentQuestion.QuestionsCombined);
 
     }
 
@@ -129,7 +156,9 @@ class PlayerViewModel : ViewModelBase
             QuestionSet < ActivePack.Questions.Count)
         {
             CurrentQuestion = new QuestionViewModel(ActivePack.Questions[QuestionSet]);
+            CurrentQuestionOutOfTotal = $"Question {QuestionSet+1} out of {ActivePack.Questions.Count}";
         }
+        ResetTimer();
     }
     
     private void SelectAnswer(object? answer)
@@ -141,15 +170,9 @@ class PlayerViewModel : ViewModelBase
         {
             option.State = option.IsCorrect ? AnswerState.Correct : AnswerState.Incorrect;
         }
-        
+
         // Add delay before moving to next question
-        var timer = new DispatcherTimer();
-        timer.Interval = TimeSpan.FromSeconds(2);
-        timer.Tick += (s, e) => {
-            timer.Stop();
-            NextQuestion();
-        };
-        timer.Start();
+        StartDelayedAdvance();
     }
 
     private void NextQuestion()
@@ -162,6 +185,7 @@ class PlayerViewModel : ViewModelBase
         else
         {
             // Quiz finished
+            _timer.Stop();
             MessageBox.Show("Quiz completed!");
         }
     }
