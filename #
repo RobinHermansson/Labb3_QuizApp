@@ -1,7 +1,5 @@
-﻿using Labb3_QuizApp.Command;
+using Labb3_QuizApp.Command;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace Labb3_QuizApp.ViewModels;
@@ -12,11 +10,9 @@ class PlayerViewModel : ViewModelBase
 
     public DelegateCommand SetPackNameCommand { get; }
 
-    public string ButtonColor { get; set; } = "LightGray";
     public DelegateCommand CheckAnswerAndProceedCommand { get; }
     public DelegateCommand PlayGameCommand { get; }
     public QuestionPackViewModel ActivePack { get => _mainWindowViewModel.ActivePack; }
-    public DelegateCommand SelectAnswerCommand { get; }
 
     public QuestionViewModel CurrentQuestionViewModel;
 
@@ -47,16 +43,28 @@ class PlayerViewModel : ViewModelBase
         }
 
     }
-
-    public QuestionViewModel _currentQuestion;
     public QuestionViewModel CurrentQuestion
     {
-        get => _currentQuestion;
-        set
+        get
         {
-            _currentQuestion = value;
-            RaisePropertyChanged();
-            CurrentQuestionOutOfTotal = $"Question {QuestionSet+1} out of {ActivePack.Questions.Count}";
+            /*
+            if (_questionViewModels != null && 
+                QuestionSet >= 0 && 
+                QuestionSet < _questionViewModels.Count)
+            {
+                return _questionViewModels[QuestionSet];
+            }
+            _questionViewModels = ActivePack.Questions
+                .Select(q => new QuestionViewModel(q))
+                .ToList();
+            QuestionViewModel question = _questionViewModels[QuestionSet];
+            */
+            //Random.Shared.Shuffle(question.QuestionsCombined);
+
+            CurrentQuestionViewModel = new QuestionViewModel(ActivePack.Questions[QuestionSet]);
+
+
+            return CurrentQuestionViewModel;
         }
     }
     public int QuestionSet
@@ -73,10 +81,7 @@ class PlayerViewModel : ViewModelBase
     {
         _mainWindowViewModel = mainWindowViewModel;
         PlayGameCommand = new DelegateCommand(PlayGame, CanPlayGame);
-        //CheckAnswerAndProceedCommand = new DelegateCommand(CheckAnswerAndProceed);
-
-        SelectAnswerCommand = new DelegateCommand(SelectAnswer);
-        
+        CheckAnswerAndProceedCommand = new DelegateCommand(CheckAnswerAndProceed);
 
     }
 
@@ -109,8 +114,6 @@ class PlayerViewModel : ViewModelBase
 
         string test = _questionViewModels[0].Query;
         */
-        // Initialize first question
-        LoadCurrentQuestion();
         CurrentQuestionOutOfTotal = $"Question {QuestionSet+1} out of {ActivePack.Questions.Count}";
         //Random.Shared.Shuffle(CurrentQuestion.QuestionsCombined);
 
@@ -121,48 +124,8 @@ class PlayerViewModel : ViewModelBase
         return true;
     }
 
-
-    private void LoadCurrentQuestion()
+    private void CheckAnswerAndProceed(object? arg)
     {
-        if (ActivePack?.Questions != null && 
-            QuestionSet >= 0 && 
-            QuestionSet < ActivePack.Questions.Count)
-        {
-            CurrentQuestion = new QuestionViewModel(ActivePack.Questions[QuestionSet]);
-        }
-    }
-    
-    private void SelectAnswer(object? answer)
-    {
-        if (answer == null) return;
-        
-        // Mark all answers
-        foreach (var option in CurrentQuestion.AnswerOptions)
-        {
-            option.State = option.IsCorrect ? AnswerState.Correct : AnswerState.Incorrect;
-        }
-        
-        // Add delay before moving to next question
-        var timer = new DispatcherTimer();
-        timer.Interval = TimeSpan.FromSeconds(2);
-        timer.Tick += (s, e) => {
-            timer.Stop();
-            NextQuestion();
-        };
-        timer.Start();
-    }
-
-    private void NextQuestion()
-    {
-        if (QuestionSet < ActivePack.Questions.Count - 1)
-        {
-            QuestionSet++;
-            LoadCurrentQuestion();
-        }
-        else
-        {
-            // Quiz finished
-            MessageBox.Show("Quiz completed!");
-        }
+        MessageBox.Show("Button was clicked.");
     }
 }

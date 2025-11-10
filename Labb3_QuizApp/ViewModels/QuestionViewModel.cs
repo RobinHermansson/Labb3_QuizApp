@@ -1,4 +1,5 @@
 ﻿using Labb3_QuizApp.Models;
+using System.Collections.ObjectModel;
 namespace Labb3_QuizApp.ViewModels;
 
 class QuestionViewModel : ViewModelBase
@@ -19,16 +20,46 @@ class QuestionViewModel : ViewModelBase
             */
         }
     }
+    public ObservableCollection<AnswerOptionViewModel> AnswerOptions { get; } = new();
 
     public string Query => _question.Query;
 
     public string CorrectAnswer => _question.CorrectAnswer;
-    public string[] QuestionsCombined => new string[] { CorrectAnswer, IncorrectAnswers[0], IncorrectAnswers[1], IncorrectAnswers[2] };
 
-    public string[] IncorrectAnswers => _question.IncorrectAnswers;
-    public QuestionViewModel(Question model)
+    private string[] _questionsCombined;
+    public string[] QuestionsCombined 
     {
-        _question = model;
+        get => _questionsCombined;
+        set
+        {
+            _questionsCombined = value;
+            RaisePropertyChanged();
+        }
+    }
+    public string[] IncorrectAnswers => _question.IncorrectAnswers;
+    public QuestionViewModel(Question question)
+    {
+        _question = question;
+        
+        // Initialize answers with randomized order
+        var allAnswers = new List<string> { question.CorrectAnswer };
+        allAnswers.AddRange(question.IncorrectAnswers);
+        
+        // Randomize
+        var random = new Random();
+        var randomized = allAnswers.OrderBy(a => random.Next()).ToList();
+        
+        // Create answer options
+        foreach (var answer in randomized)
+        {
+            AnswerOptions.Add(new AnswerOptionViewModel
+            {
+                Text = answer,
+                IsCorrect = answer == question.CorrectAnswer
+            });
+        }
+        //_questionsCombined = [_question.CorrectAnswer, _question.IncorrectAnswers[0], _question.IncorrectAnswers[1], _question.IncorrectAnswers[2]];
+        //Random.Shared.Shuffle(_questionsCombined);
     }
 
 }
