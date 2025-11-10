@@ -116,12 +116,14 @@ internal class MainWindowViewModel : ViewModelBase
     }
     public void CreateNewPack(object? arg)
     {
-        var optionsWindow = new OptionsWindow();
-        var newQuestionPack = new QuestionPack("<New Question Pack>");
-        var newQuestionPackModel = new QuestionPackViewModel(newQuestionPack);
-        optionsWindow.DataContext = newQuestionPackModel;
-        optionsWindow.ShowDialog();
-        Packs.Add(newQuestionPackModel);
+        var viewModel = new OptionsWindowViewModel();
+        ShowOptionsDialog(viewModel);
+        if (viewModel.DialogResult)
+        {
+            var newPack = viewModel.CreateQuestionPack();
+            var newPackViewModel = new QuestionPackViewModel(newPack);
+            Packs.Add(newPackViewModel);
+        }
     }
 
     public void SelectNewActivePack(object? arg)
@@ -139,6 +141,25 @@ internal class MainWindowViewModel : ViewModelBase
         {
             ActivePack = new QuestionPackViewModel(new QuestionPack("NewDefaultPack"));
         }
+    }
+    public void OpenActivePackOptions(object? arg)
+    {
+        
+        if (ActivePack == null) return;
+    
+        var viewModel = new OptionsWindowViewModel(ActivePack);
+        ShowOptionsDialog(viewModel);
+    }
+
+    public void ShowOptionsDialog(OptionsWindowViewModel viewModel)
+    {
+        var optionsWindow = new OptionsWindow
+        {
+            DataContext = viewModel
+        };
+        
+        viewModel.SetDialogWindow(optionsWindow);
+        optionsWindow.ShowDialog();
     }
 
 }

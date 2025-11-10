@@ -34,7 +34,7 @@ class ConfigurationViewModel : ViewModelBase
     {
         _mainWindowViewModel = mainWindowViewModel;
         OptionsViewModel = new OptionsViewModel(this);
-        OpenOptionsWindowCommand = new DelegateCommand(OpenActivePackOptions);
+        OpenOptionsWindowCommand = new DelegateCommand(_mainWindowViewModel.OpenActivePackOptions);
 
         AddNewQuestionCommand = new DelegateCommand(AddNewQuestion, CanAddNewQuestion);
         RemoveSelectedQuestionCommand = new DelegateCommand(RemoveSelectedQuestion, CanRemoveSelectedQuestion);
@@ -63,12 +63,5 @@ class ConfigurationViewModel : ViewModelBase
         return false;
     }
 
-    public void OpenActivePackOptions(object? arg)
-    {
-
-        var optionsWindow = new OptionsWindow();
-        optionsWindow.DataContext = ActivePack;
-        optionsWindow.ShowDialog();
-
-    }
+    
 }
