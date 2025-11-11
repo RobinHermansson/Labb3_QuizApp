@@ -14,6 +14,10 @@ internal class MainWindowViewModel : ViewModelBase
     public ObservableCollection<QuestionPackViewModel> Packs { get; } = new();
     private QuestionPackViewModel _activePack;
 
+    private QuestionPackGeneratorAPIService _importerService;
+
+    public DelegateCommand ImportExternalQuestionPackCommand { get; }
+
     public DelegateCommand SwitchToPlayerViewCommand { get; }
     public DelegateCommand SwitchToConfigurationViewCommand { get; }
     public DelegateCommand CreateNewPackCommand { get; }
@@ -91,6 +95,9 @@ internal class MainWindowViewModel : ViewModelBase
 
         PackHandlerService PackHandler = new PackHandlerService();
 
+        _importerService = new QuestionPackGeneratorAPIService();
+        ImportExternalQuestionPackCommand = new DelegateCommand(ImportExternalQuestionPack);
+
         SwitchToConfigurationViewCommand = new DelegateCommand(SwitchToConfigurationView);
         SwitchToPlayerViewCommand = new DelegateCommand(SwitchToPlayerView);
 
@@ -160,6 +167,26 @@ internal class MainWindowViewModel : ViewModelBase
         
         viewModel.SetDialogWindow(optionsWindow);
         optionsWindow.ShowDialog();
+    }
+
+    public async void ImportExternalQuestionPack(object? arg)
+    {
+
+       try
+        {
+            var pack = await _importerService.GetQuestionPackAsync();
+            if (pack != null)
+            {
+                var packViewModel = new QuestionPackViewModel(pack);
+                Packs.Add(packViewModel);
+                ActivePack = packViewModel;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Error importing question pack: {ex.Message}");
+        }
+            
     }
 
 }

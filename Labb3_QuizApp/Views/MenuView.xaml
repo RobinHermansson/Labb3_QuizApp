@@ -10,31 +10,42 @@
     <Grid>
         <Menu>
             <MenuItem Header="_File">
-                <MenuItem Header="_New Question Pack" Icon="{fa:Icon File}" Command="{Binding CreateNewPackCommand}"/>
-                <MenuItem Header="_Select Question Pack" ItemsSource="{Binding Packs}">
+                <MenuItem Header="_New Question Pack" 
+                          Icon="{fa:Icon File}" 
+                          Command="{Binding CreateNewPackCommand}"/>
+                <MenuItem Header="_Select Question Pack" 
+                          ItemsSource="{Binding Packs}">
                     <MenuItem.ItemContainerStyle>
                         <Style TargetType="MenuItem">
-                            <Setter Property="Header" Value="{Binding Name}"/>
+                            <Setter Property="Header" 
+                                    Value="{Binding Name}"/>
                             <Setter Property="Command" 
-                    Value="{Binding Path=DataContext.SelectNewActivePackCommand, 
-                             RelativeSource={RelativeSource AncestorType=MenuItem, 
+                                    Value="{Binding Path=DataContext.SelectNewActivePackCommand, 
+                                            RelativeSource={RelativeSource AncestorType=MenuItem, 
                                             AncestorLevel=2}}"/>
-                            <Setter Property="CommandParameter" Value="{Binding}"/>
+                            <Setter Property="CommandParameter" 
+                                    Value="{Binding}"/>
                         </Style>
                     </MenuItem.ItemContainerStyle>
                 </MenuItem>
-                <MenuItem Header="_Delete Question Pack" Command="{Binding DeleteActivePackCommand}"/>
+                <MenuItem Header="_Delete Question Pack" 
+                          Command="{Binding DeleteActivePackCommand}"/>
+                <MenuItem Header="_Import Question Pack" Command="{Binding ImportExternalQuestionPackCommand}"/>
                 <Separator/>
                 <MenuItem Header="E_xit" Icon="{fa:Icon DoorOpen}"/>
             </MenuItem>
             <MenuItem Header="_Edit">
-                <MenuItem Header="_Add Question" Icon="{fa:Icon plus}" InputGestureText="Ctrl+A"/>
+                <MenuItem Header="_Add Question" Icon="{fa:Icon plus}" 
+                          InputGestureText="Ctrl+A"/>
                 <MenuItem Header="_Remove Question" Icon="{fa:Icon minus}"/>
-                <MenuItem Header="_Pack Options" Icon="{fa:Icon gear}" Command="{Binding ConfigurationViewModel.OpenOptionsWindowCommand}"/>
+                <MenuItem Header="_Pack Options" Icon="{fa:Icon gear}"
+                          Command="{Binding ConfigurationViewModel.OpenOptionsWindowCommand}"/>
             </MenuItem>
             <MenuItem Header="_View">
-                <MenuItem Header="_Play" Command="{Binding SwitchToPlayerViewCommand}"/>
-                <MenuItem Header="_Configure" Command="{Binding SwitchToConfigurationViewCommand}"/>
+                <MenuItem Header="_Play" 
+                          Command="{Binding SwitchToPlayerViewCommand}"/>
+                <MenuItem Header="_Configure" 
+                          Command="{Binding SwitchToConfigurationViewCommand}"/>
             </MenuItem>
         </Menu>
     </Grid>
