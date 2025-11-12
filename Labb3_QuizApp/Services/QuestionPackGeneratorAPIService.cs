@@ -21,7 +21,10 @@ namespace Labb3_QuizApp.Services
             _httpClient.BaseAddress = new Uri("https://opentdb.com/api.php");
             
         }
-        public async Task<QuestionPack> GetQuestionPackAsync()
+        public async Task<QuestionPack> GetQuestionPackAsync(
+            int numberOfQuestions = 10,
+            string category = "Any Category", 
+            Difficulty difficulty = Difficulty.Medium)
         {
 
             var options = new JsonSerializerOptions()
@@ -34,7 +37,7 @@ namespace Labb3_QuizApp.Services
             };
 
             TriviaApiRequestGenerator apiRequestHelper = new TriviaApiRequestGenerator();
-            string apiParams = apiRequestHelper.GenerateParamsString();
+            string apiParams = apiRequestHelper.GenerateParamsString(numberOfQuestions, category, difficulty);
             var response = await _httpClient.GetAsync(apiParams);
 
             response.EnsureSuccessStatusCode();
@@ -47,7 +50,12 @@ namespace Labb3_QuizApp.Services
                 throw new Exception("No questions returned from API");
             }
 
-            var triviaPack = new QuestionPack("From External Source");
+            string packName = $"Trivia: {category} ({difficulty})";
+            if (category == "Any Category")
+            {
+                packName = $"Trivia Mix ({difficulty})";
+            }
+            var triviaPack = new QuestionPack(packName);
 
             foreach (var triviaQuestion in apiResponse.results)
             {

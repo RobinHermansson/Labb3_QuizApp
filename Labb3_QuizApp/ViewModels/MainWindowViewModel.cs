@@ -17,11 +17,12 @@ internal class MainWindowViewModel : ViewModelBase
     private QuestionPackGeneratorAPIService _importerService;
 
     public DelegateCommand ImportExternalQuestionPackCommand { get; }
+    public DelegateCommand OpenExternalImportOptionsCommand { get; }
 
     public DelegateCommand SwitchToPlayerViewCommand { get; }
     public DelegateCommand SwitchToConfigurationViewCommand { get; }
     public DelegateCommand CreateNewPackCommand { get; }
-    
+
     public DelegateCommand DeleteActivePackCommand { get; }
     private QuestionPackViewModel _selectedPack;
     public QuestionPackViewModel SelectedPack
@@ -97,6 +98,7 @@ internal class MainWindowViewModel : ViewModelBase
 
         _importerService = new QuestionPackGeneratorAPIService();
         ImportExternalQuestionPackCommand = new DelegateCommand(ImportExternalQuestionPack);
+        OpenExternalImportOptionsCommand = new DelegateCommand(OpenExternalImportOptions);
 
         SwitchToConfigurationViewCommand = new DelegateCommand(SwitchToConfigurationView);
         SwitchToPlayerViewCommand = new DelegateCommand(SwitchToPlayerView);
@@ -151,9 +153,9 @@ internal class MainWindowViewModel : ViewModelBase
     }
     public void OpenActivePackOptions(object? arg)
     {
-        
+
         if (ActivePack == null) return;
-    
+
         var viewModel = new OptionsWindowViewModel(ActivePack);
         ShowOptionsDialog(viewModel);
     }
@@ -164,7 +166,7 @@ internal class MainWindowViewModel : ViewModelBase
         {
             DataContext = viewModel
         };
-        
+
         viewModel.SetDialogWindow(optionsWindow);
         optionsWindow.ShowDialog();
     }
@@ -172,7 +174,7 @@ internal class MainWindowViewModel : ViewModelBase
     public async void ImportExternalQuestionPack(object? arg)
     {
 
-       try
+        try
         {
             var pack = await _importerService.GetQuestionPackAsync();
             if (pack != null)
@@ -186,7 +188,40 @@ internal class MainWindowViewModel : ViewModelBase
         {
             MessageBox.Show($"Error importing question pack: {ex.Message}");
         }
-            
-    }
 
+    }
+    public async void OpenExternalImportOptions(object? arg)
+    {
+        var viewModel = new ExternalImportOptionsViewModel(Packs);
+        var window = new ExternalImportOptionsWIndow
+        {
+            DataContext = viewModel
+        };
+        viewModel.SetDialogWindow(window);
+
+        window.ShowDialog();
+
+        if (viewModel.DialogResult)
+        {
+            try
+            {
+
+                var pack = await QuestionPackGeneratorAPIService.GetQuestionPackAsync(
+                    viewModel.NumberOfQuestions,
+                    viewModel.SelectedCategory,
+                    viewModel.SelectedDifficulty);
+
+                if (pack != null)
+                {
+                    var packViewModel = new QuestionPackViewModel(pack);
+                    Packs.Add(packViewModel);
+                    ActivePack = packViewModel;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error importing pack: {ex.Message}");
+            }
+        }
+    }
 }

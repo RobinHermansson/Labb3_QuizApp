@@ -5,26 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Labb3_QuizApp.Windows"
         mc:Ignorable="d"
-        Title="Import Questions From Open Trivia Database" Height="Auto" Width="400">
+        Title="Import Questions From Open Trivia Database" Height="320" Width="400" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Grid.ColumnSpan="2">
-            <Label Content="Category" Margin="10 10 10 0" FontWeight="Bold"/>
-            <ComboBox Margin="10 10 10 0"></ComboBox>
-            <Label Content="Difficulty" Margin="10 10 10 0" FontWeight="Bold"/>
-            <ComboBox Margin="10 10 10 0"></ComboBox>
-            <Label Content="Number of Questions" Margin="10 10 10 0" FontWeight="Bold"/>
-            <Slider Margin="10 10 10 0" TickPlacement="BottomRight" Maximum="20" Minimum="1" TickFrequency="1.0"/>
+            <Label Content="Category" Margin="5 10 10 0" FontWeight="Bold"/>
+            <ComboBox Margin="10 10 10 0" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}"></ComboBox>
+            <Label Content="Difficulty" Margin="5 10 10 0" FontWeight="Bold"/>
+            <ComboBox Margin="10 10 10 0" ItemsSource="{Binding DifficultyValues}" SelectedItem="{Binding SelectedDifficulty}"></ComboBox>
+            <Label Content="Number of Questions" Margin="5 10 10 0" FontWeight="Bold"/>
+            <TextBox Text="{Binding ElementName=numberSlider, Path=Value}" Margin="10 10 10 0" HorizontalAlignment="Left"></TextBox>
+            <Slider x:Name="numberSlider" Margin="10 10 10 0" Value="{Binding NumberOfQuestions}" TickPlacement="BottomRight" Maximum="20" Minimum="1" TickFrequency="1.0"/>
+            
         </StackPanel>
-            <Button Grid.Row="1" Grid.Column="0" Content="Cancel" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Margin="10"/>
-            <Button Grid.Row="1" Grid.Column="1" Content="Ok" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Margin="10"/>
+            <Button Grid.Row="1" Grid.Column="0" Content="Cancel" Command="{Binding CancelCommand}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="50" Margin="10 10 10 0"/>
+            <Button Grid.Row="1" Grid.Column="1" Content="Import" Command="{Binding ImportCommand}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="50" Margin="10 10 10 0"/>
 
     </Grid>
 </Window>
