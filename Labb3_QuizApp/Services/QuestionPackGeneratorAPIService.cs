@@ -18,7 +18,7 @@ namespace Labb3_QuizApp.Services
         public QuestionPackGeneratorAPIService()
         {
             _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri("https://opentdb.com/api.php?amount=10");
+            _httpClient.BaseAddress = new Uri("https://opentdb.com/api.php");
             
         }
         public async Task<QuestionPack> GetQuestionPackAsync()
@@ -33,7 +33,9 @@ namespace Labb3_QuizApp.Services
                 PropertyNameCaseInsensitive = true
             };
 
-            var response = await _httpClient.GetAsync(_httpClient.BaseAddress);
+            TriviaApiRequestGenerator apiRequestHelper = new TriviaApiRequestGenerator();
+            string apiParams = apiRequestHelper.GenerateParamsString();
+            var response = await _httpClient.GetAsync(apiParams);
 
             response.EnsureSuccessStatusCode();
 
