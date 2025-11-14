@@ -80,4 +80,21 @@ internal class QuestionPackViewModel : ViewModelBase
     }
 
     public ObservableCollection<Question> Questions { get; set; }
+    public QuestionPack GetModel()
+    {
+        // Create a new model or return the reference to the original model
+        var model = new QuestionPack(Name)
+        {
+            Difficulty = this.Difficulty,
+            TimeLimitInSeconds = this.TimeLimitInSeconds
+        };
+        
+        // Copy all questions
+        foreach (var question in Questions)
+        {
+            model.Questions.Add(question);
+        }
+        
+        return model;
+    }
 }

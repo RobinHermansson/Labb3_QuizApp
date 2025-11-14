@@ -20,6 +20,7 @@ internal class MainWindowViewModel : ViewModelBase
     private QuestionPackViewModel _activePack;
 
     private QuestionPackGeneratorAPIService _importerService;
+    private PackHandlerService _packHandlerService;
 
     public DelegateCommand ImportExternalQuestionPackCommand { get; }
     public DelegateCommand OpenExternalImportOptionsCommand { get; }
@@ -102,7 +103,7 @@ internal class MainWindowViewModel : ViewModelBase
         QuestionPackGeneratorAPIService = new QuestionPackGeneratorAPIService();
         CreateNewPackCommand = new DelegateCommand(CreateNewPack);
 
-        PackHandlerService PackHandler = new PackHandlerService();
+        _packHandlerService = new PackHandlerService();
 
         _importerService = new QuestionPackGeneratorAPIService();
         ImportExternalQuestionPackCommand = new DelegateCommand(ImportExternalQuestionPack);
@@ -121,7 +122,7 @@ internal class MainWindowViewModel : ViewModelBase
 
         CurrentView = new ConfigurationView();
 
-        var allPacks = PackHandler.LoadAllPacks();
+        var allPacks = _packHandlerService.LoadAllPacks();
         allPacks.ForEach(p => Packs.Add(new QuestionPackViewModel(p)));
         ActivePack = Packs[0];
 
@@ -268,6 +269,10 @@ internal class MainWindowViewModel : ViewModelBase
 
     public void ExitGame(object? arg)
     {
-        Application.Current.Shutdown();
+        var packs = Packs.Select(p => p.GetModel()).ToList();
+        _packHandlerService.SaveAllPacks(packs);
+        
+        // Close the application
+        Application.Current.Shutdown();    
     }
 }
