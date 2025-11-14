@@ -194,6 +194,8 @@ class PlayerViewModel : ViewModelBase
         {
             _timer.Stop();
             MessageBox.Show($"Quiz completed! You got {CorrectlyAnsweredCount} correct!");
+            CorrectlyAnsweredCount = 0;
+            _mainWindowViewModel.SwitchToConfigurationView(this);
         }
     }
 }
