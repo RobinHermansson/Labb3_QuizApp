@@ -11,9 +11,10 @@
         <Menu>
             <MenuItem Header="_File">
                 <MenuItem Header="_New Question Pack" 
-                          Icon="{fa:Icon File}" 
+                          Icon="{fa:Icon folderplus}" 
                           Command="{Binding CreateNewPackCommand}"/>
-                <MenuItem Header="_Select Question Pack" 
+                <MenuItem Header="_Select Question Pack"
+                          Icon="{fa:Icon folderopen}"
                           ItemsSource="{Binding Packs}">
                     <MenuItem.ItemContainerStyle>
                         <Style TargetType="MenuItem">
@@ -29,28 +30,43 @@
                     </MenuItem.ItemContainerStyle>
                 </MenuItem>
                 <MenuItem Header="_Delete Question Pack" 
+                          Icon="{fa:Icon folderminus}"
                           Command="{Binding DeleteActivePackCommand}"/>
-                <MenuItem Header="_Import Question Pack" Command="{Binding OpenExternalImportOptionsCommand}" InputGestureText="Ctrl+I"/>
+                <MenuItem Header="_Import Question Pack" 
+                          Command="{Binding OpenExternalImportOptionsCommand}" 
+                          InputGestureText="Ctrl+I"
+                          Icon="{fa:Icon cloudarrowdown}"/>
                 <Separator/>
                 <MenuItem Header="E_xit" Icon="{fa:Icon DoorOpen}" Command="{Binding ExitGameCommand}" InputGestureText="Alt+F4"/>
             </MenuItem>
             <MenuItem Header="_Edit">
-                <MenuItem Header="_Add Question" Icon="{fa:Icon plus}" 
+                <MenuItem Header="_Add Question" 
+                          Icon="{fa:Icon plus}" 
                           InputGestureText="Insert"
                           />
-                <MenuItem Header="_Remove Question" Icon="{fa:Icon minus}" InputGestureText="Delete" Command="{Binding ConfigurationViewModel.RemoveSelectedQuestionCommand}"/>
-                <MenuItem Header="_Pack Options" Icon="{fa:Icon gear}"
+                <MenuItem Header="_Remove Question" Icon="{fa:Icon minus}" 
+                          InputGestureText="Delete" 
+                          Command="{Binding ConfigurationViewModel.RemoveSelectedQuestionCommand}"/>
+                <MenuItem Header="_Pack Options" 
+                          Icon="{fa:Icon sliders}"
                           Command="{Binding ConfigurationViewModel.OpenOptionsWindowCommand}"
                           InputGestureText="Ctrl+O"
                           />
             </MenuItem>
             <MenuItem Header="_View">
                 <MenuItem Header="_Play" 
-                          Command="{Binding SwitchToPlayerViewCommand}" InputGestureText="Ctrl+P"/>
+                          Command="{Binding SwitchToPlayerViewCommand}"
+                          InputGestureText="Ctrl+P"
+                          Icon="{fa:Icon play}" />
                 <MenuItem Header="_Edit" 
-                          Command="{Binding SwitchToConfigurationViewCommand}" InputGestureText="Ctrl+E"/>
+                          Command="{Binding SwitchToConfigurationViewCommand}"
+                          InputGestureText="Ctrl+E"
+                          Icon="{fa:Icon gear}" />
                 <Separator/>
-                <MenuItem Header="_Full screen mode" Command="{Binding FullScreenToggleCommand}" InputGestureText="Alt+Enter"/>
+                <MenuItem Header="_Full screen mode"
+                          Command="{Binding FullScreenToggleCommand}"
+                          InputGestureText="Alt+Enter"
+                          Icon="{fa:Icon maximize}" />
             </MenuItem>
         </Menu>
     </Grid>
