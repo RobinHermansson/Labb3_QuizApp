@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-class TriviaApiResponse
+﻿class TriviaApiResponse
 {
     public int response_code { get; set; }
     public List<TriviaQuestion> results { get; set; }

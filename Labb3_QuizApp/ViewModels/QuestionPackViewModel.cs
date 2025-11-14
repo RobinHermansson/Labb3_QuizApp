@@ -15,7 +15,7 @@ internal class QuestionPackViewModel : ViewModelBase
     }
     public QuestionPackViewModel()
     {
-        
+
     }
 
     private void Questions_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
@@ -45,7 +45,7 @@ internal class QuestionPackViewModel : ViewModelBase
         set
         {
             _selectedDifficulty = value;
-            _model.Difficulty = value; // hope this works to set it directly on selection.
+            _model.Difficulty = value;
             RaisePropertyChanged();
         }
     }
@@ -82,19 +82,17 @@ internal class QuestionPackViewModel : ViewModelBase
     public ObservableCollection<Question> Questions { get; set; }
     public QuestionPack GetModel()
     {
-        // Create a new model or return the reference to the original model
         var model = new QuestionPack(Name)
         {
             Difficulty = this.Difficulty,
             TimeLimitInSeconds = this.TimeLimitInSeconds
         };
-        
-        // Copy all questions
+
         foreach (var question in Questions)
         {
             model.Questions.Add(question);
         }
-        
+
         return model;
     }
 }

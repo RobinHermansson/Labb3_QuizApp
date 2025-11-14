@@ -1,17 +1,11 @@
 ﻿using Labb3_QuizApp.Command;
 using Labb3_QuizApp.Models;
-using Labb3_QuizApp.Services;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Labb3_QuizApp.ViewModels;
 
-class ExternalImportOptionsViewModel: ViewModelBase
+class ExternalImportOptionsViewModel : ViewModelBase
 {
     private Window _dialogWindow;
     private ObservableCollection<QuestionPackViewModel> _originalPackList;
@@ -21,7 +15,7 @@ class ExternalImportOptionsViewModel: ViewModelBase
     public string SelectedCategory { get; set; } = "Any Category";
     public Array DifficultyValues => Enum.GetValues(typeof(Difficulty));
     public Difficulty SelectedDifficulty { get; set; } = Difficulty.Medium;
-    
+
     private int _numberOfQuestions = 10;
     public int NumberOfQuestions
     {
@@ -32,7 +26,7 @@ class ExternalImportOptionsViewModel: ViewModelBase
             RaisePropertyChanged();
         }
     }
-    
+
     public DelegateCommand CancelCommand { get; }
     public DelegateCommand ImportCommand { get; }
     public ExternalImportOptionsViewModel(ObservableCollection<QuestionPackViewModel> originalPackList)
@@ -46,12 +40,12 @@ class ExternalImportOptionsViewModel: ViewModelBase
         _dialogWindow = window;
     }
 
-     private void Cancel(object? arg)
+    private void Cancel(object? arg)
     {
         DialogResult = false;
         _dialogWindow?.Close();
     }
-    
+
     private void Import(object? arg)
     {
         DialogResult = true;

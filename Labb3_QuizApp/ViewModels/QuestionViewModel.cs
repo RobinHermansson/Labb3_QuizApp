@@ -22,7 +22,7 @@ class QuestionViewModel : ViewModelBase
     public string CorrectAnswer => _question.CorrectAnswer;
 
     private string[] _questionsCombined;
-    public string[] QuestionsCombined 
+    public string[] QuestionsCombined
     {
         get => _questionsCombined;
         set
@@ -35,16 +35,13 @@ class QuestionViewModel : ViewModelBase
     public QuestionViewModel(Question question)
     {
         _question = question;
-        
-        // Initialize answers with randomized order
+
         var allAnswers = new List<string> { question.CorrectAnswer };
         allAnswers.AddRange(question.IncorrectAnswers);
-        
-        // Randomize
+
         var random = new Random();
         var randomized = allAnswers.OrderBy(a => random.Next()).ToList();
-        
-        // Create answer options
+
         foreach (var answer in randomized)
         {
             AnswerOptions.Add(new AnswerOptionViewModel

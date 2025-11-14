@@ -13,7 +13,7 @@ internal class MainWindowViewModel : ViewModelBase
 {
 
     private Window _mainWindow;
-    
+
     private bool _isFullscreen;
 
     public ObservableCollection<QuestionPackViewModel> Packs { get; } = new();
@@ -247,33 +247,30 @@ internal class MainWindowViewModel : ViewModelBase
 
     public void FullScreenToggle(object? arg)
     {
-       if (_mainWindow == null) return;
-        
+        if (_mainWindow == null) return;
+
         if (_isFullscreen)
         {
-            // Restore to normal
             _mainWindow.WindowStyle = WindowStyle.SingleBorderWindow;
             _mainWindow.WindowState = WindowState.Normal;
             _mainWindow.ResizeMode = ResizeMode.CanResize;
         }
         else
         {
-            // Switch to fullscreen
             _mainWindow.WindowStyle = WindowStyle.None;
             _mainWindow.WindowState = WindowState.Maximized;
             _mainWindow.ResizeMode = ResizeMode.NoResize;
         }
-        
+
         _isFullscreen = !_isFullscreen;
-    } 
-    
+    }
+
 
     public void ExitGame(object? arg)
     {
         var packs = Packs.Select(p => p.GetModel()).ToList();
         _packHandlerService.SaveAllPacks(packs);
-        
-        // Close the application
-        Application.Current.Shutdown();    
+
+        Application.Current.Shutdown();
     }
 }

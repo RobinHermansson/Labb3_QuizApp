@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Text.Json;
+﻿using Labb3_QuizApp.Models;
 using System.IO;
-using Labb3_QuizApp.Models;
+using System.Text.Json;
 
 namespace Labb3_QuizApp.Services;
 
@@ -20,7 +15,7 @@ class PackHandlerService
     public PackHandlerService()
     {
         _fullPath = Path.Combine(_localFolder, _appName);
-        _fullPathWithFileName = Path.Combine(_fullPath, _questionPacksName); 
+        _fullPathWithFileName = Path.Combine(_fullPath, _questionPacksName);
     }
 
     public List<QuestionPack> LoadAllPacks()
@@ -66,7 +61,6 @@ class PackHandlerService
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"Error saving packs: {ex.Message}");
-            
         }
     }
 }

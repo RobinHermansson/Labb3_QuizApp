@@ -1,6 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Windows;
+﻿using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
@@ -11,21 +9,18 @@ namespace Labb3_QuizApp.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             System.Diagnostics.Debug.WriteLine($"Converter called with value: {value} of type {value?.GetType().Name}");
-            // Handle enum values
             if ((AnswerState)value is AnswerState state)
             {
                 return GetBrushForState(state);
             }
-            
-            // Handle string values
+
             if (value is string stateStr)
             {
                 if (Enum.TryParse<AnswerState>(stateStr, out var parsedState))
                 {
                     return GetBrushForState(parsedState);
                 }
-                
-                // Direct string matching as fallback
+
                 return stateStr switch
                 {
                     "Correct" => new SolidColorBrush(Colors.Green),
@@ -33,7 +28,7 @@ namespace Labb3_QuizApp.Converters
                     _ => new SolidColorBrush(Colors.LightGray)
                 };
             }
-            
+
             return new SolidColorBrush(Colors.LightGray);
         }
 

@@ -1,7 +1,6 @@
 ﻿using Labb3_QuizApp.Command;
 using Labb3_QuizApp.Models;
 using Labb3_QuizApp.Services;
-using Labb3_QuizApp.Windows;
 
 namespace Labb3_QuizApp.ViewModels;
 
@@ -60,5 +59,5 @@ class ConfigurationViewModel : ViewModelBase
         return SelectedQuestion != null;
     }
 
-    
+
 }

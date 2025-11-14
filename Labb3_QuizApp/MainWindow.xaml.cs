@@ -28,7 +28,7 @@ public partial class MainWindow : Window
                 var packs = viewModel.Packs.Select(p => p.GetModel()).ToList();
                 var packHandler = new PackHandlerService();
                 packHandler.SaveAllPacks(packs);
-                
+
             }
             catch (Exception ex)
             {

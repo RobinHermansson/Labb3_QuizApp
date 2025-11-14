@@ -28,10 +28,6 @@
         <ContentControl Grid.Row="1">
             <ContentPresenter Content="{Binding CurrentView}"/>
         </ContentControl>
-
-
-            <!-- views:PlayerView x:Name="playerView" Grid.Row="1"></views:PlayerView-->
-        <!--views:ConfigurationView Grid.Row="1"></views:ConfigurationView-->
     </Grid>
 </Window>
 
