@@ -25,27 +25,48 @@ class PackHandlerService
 
     public List<QuestionPack> LoadAllPacks()
     {
-        string fullPath = Path.Combine(_localFolder, _appName);
-
-        if (!Directory.Exists(_fullPath))
+        try
         {
-            Directory.CreateDirectory(_fullPath);
+            if (!Directory.Exists(_fullPath))
+            {
+                Directory.CreateDirectory(_fullPath);
+            }
+            if (!File.Exists(_fullPathWithFileName))
+            {
+                using (var fs = File.Create(_fullPathWithFileName))
+                {
+                }
+                return new List<QuestionPack>() { new QuestionPack("<Default Empty Question Pack>") };
+            }
+            string json = File.ReadAllText(_fullPathWithFileName);
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                return new List<QuestionPack>() { new QuestionPack("<Default Empty Question Pack>") };
+            }
+            return JsonSerializer.Deserialize<List<QuestionPack>>(File.ReadAllText(_fullPathWithFileName));
         }
-        if (!File.Exists(_fullPathWithFileName))
+        catch (Exception ex)
         {
-            File.Create(_fullPathWithFileName);
+            System.Diagnostics.Debug.WriteLine($"Error loading packs: {ex.Message}");
             return new List<QuestionPack>() { new QuestionPack("<Default Empty Question Pack>") };
         }
-        return JsonSerializer.Deserialize<List<QuestionPack>>(File.ReadAllText(_fullPathWithFileName));
-
     }
 
     public void SaveAllPacks(List<QuestionPack> qPacks)
     {
-        if (!Directory.Exists(_fullPath))
+        try
         {
-            Directory.CreateDirectory(_fullPath);
+            if (!Directory.Exists(_fullPath))
+            {
+                Directory.CreateDirectory(_fullPath);
+            }
+            File.WriteAllText(_fullPathWithFileName, JsonSerializer.Serialize(qPacks));
+
         }
-        File.WriteAllText(_fullPathWithFileName ,JsonSerializer.Serialize(qPacks));
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Error saving packs: {ex.Message}");
+            
+        }
     }
 }
