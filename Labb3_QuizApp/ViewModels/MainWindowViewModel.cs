@@ -11,6 +11,11 @@ namespace Labb3_QuizApp.ViewModels;
 
 internal class MainWindowViewModel : ViewModelBase
 {
+
+    private Window _mainWindow;
+    
+    private bool _isFullscreen;
+
     public ObservableCollection<QuestionPackViewModel> Packs { get; } = new();
     private QuestionPackViewModel _activePack;
 
@@ -24,6 +29,7 @@ internal class MainWindowViewModel : ViewModelBase
     public DelegateCommand CreateNewPackCommand { get; }
 
     public DelegateCommand DeleteActivePackCommand { get; }
+    public DelegateCommand FullScreenToggleCommand { get; }
 
     public DelegateCommand ExitGameCommand { get; }
     private QuestionPackViewModel _selectedPack;
@@ -108,7 +114,10 @@ internal class MainWindowViewModel : ViewModelBase
         SelectNewActivePackCommand = new DelegateCommand(SelectNewActivePack);
         DeleteActivePackCommand = new DelegateCommand(DeleteActivePack);
 
+        FullScreenToggleCommand = new DelegateCommand(FullScreenToggle);
+
         ExitGameCommand = new DelegateCommand(ExitGame);
+
 
         CurrentView = new ConfigurationView();
 
@@ -228,6 +237,34 @@ internal class MainWindowViewModel : ViewModelBase
             }
         }
     }
+
+    public void SetMainWindow(Window window)
+    {
+        _mainWindow = window;
+    }
+
+    public void FullScreenToggle(object? arg)
+    {
+       if (_mainWindow == null) return;
+        
+        if (_isFullscreen)
+        {
+            // Restore to normal
+            _mainWindow.WindowStyle = WindowStyle.SingleBorderWindow;
+            _mainWindow.WindowState = WindowState.Normal;
+            _mainWindow.ResizeMode = ResizeMode.CanResize;
+        }
+        else
+        {
+            // Switch to fullscreen
+            _mainWindow.WindowStyle = WindowStyle.None;
+            _mainWindow.WindowState = WindowState.Maximized;
+            _mainWindow.ResizeMode = ResizeMode.NoResize;
+        }
+        
+        _isFullscreen = !_isFullscreen;
+    } 
+    
 
     public void ExitGame(object? arg)
     {

@@ -46,6 +46,8 @@
                           Command="{Binding SwitchToPlayerViewCommand}"/>
                 <MenuItem Header="_Edit" 
                           Command="{Binding SwitchToConfigurationViewCommand}"/>
+                <Separator/>
+                <MenuItem Header="_Full screen mode" Command="{Binding FullScreenToggleCommand}" InputGestureText="Alt+Enter"/>
             </MenuItem>
         </Menu>
     </Grid>
