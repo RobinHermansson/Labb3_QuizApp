@@ -15,7 +15,6 @@ class ConfigurationViewModel : ViewModelBase
 
     public DelegateCommand AddNewQuestionCommand { get; }
     public DelegateCommand RemoveSelectedQuestionCommand { get; }
-    public PackHandlerService PackHandlerService { get; }
 
 
 
@@ -38,7 +37,6 @@ class ConfigurationViewModel : ViewModelBase
 
         AddNewQuestionCommand = new DelegateCommand(AddNewQuestion, CanAddNewQuestion);
         RemoveSelectedQuestionCommand = new DelegateCommand(RemoveSelectedQuestion, CanRemoveSelectedQuestion);
-        PackHandlerService = new PackHandlerService();
 
     }
 
