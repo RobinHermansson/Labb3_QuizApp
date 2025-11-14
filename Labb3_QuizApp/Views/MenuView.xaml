@@ -46,7 +46,7 @@
             </MenuItem>
             <MenuItem Header="_View">
                 <MenuItem Header="_Play" 
-                          Command="{Binding SwitchToPlayerViewCommand}"/>
+                          Command="{Binding SwitchToPlayerViewCommand}" InputGestureText="Ctrl+P"/>
                 <MenuItem Header="_Edit" 
                           Command="{Binding SwitchToConfigurationViewCommand}"/>
                 <Separator/>

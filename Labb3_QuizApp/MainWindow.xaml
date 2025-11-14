@@ -15,6 +15,7 @@
     <KeyBinding Key="Insert" Command="{Binding ConfigurationViewModel.AddNewQuestionCommand}"/>
     <KeyBinding Key="Delete" Command="{Binding ConfigurationViewModel.RemoveSelectedQuestionCommand}"/>
     <KeyBinding Key="O" Modifiers="Ctrl"  Command="{Binding ConfigurationViewModel.OpenOptionsWindowCommand}"/>
+    <KeyBinding Key="P" Modifiers="Ctrl"  Command="{Binding SwitchToPlayerViewCommand}"/>
 </Window.InputBindings>
 
     <Grid>
