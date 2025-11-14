@@ -31,7 +31,8 @@
                        FontSize="25"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Bottom"
-                       Margin="10 10 10 0"/>
+                       Margin="10 10 10 0"
+                       TextWrapping="Wrap"/>
             <TextBlock x:Name="QuestionCountTextBlock"
                        Text="{Binding CurrentQuestionOutOfTotal}"
                        HorizontalAlignment="Center"
