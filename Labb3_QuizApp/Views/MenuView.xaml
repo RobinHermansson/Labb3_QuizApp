@@ -32,7 +32,7 @@
                           Command="{Binding DeleteActivePackCommand}"/>
                 <MenuItem Header="_Import Question Pack" Command="{Binding OpenExternalImportOptionsCommand}"/>
                 <Separator/>
-                <MenuItem Header="E_xit" Icon="{fa:Icon DoorOpen}"/>
+                <MenuItem Header="E_xit" Icon="{fa:Icon DoorOpen}" Command="{Binding ExitGameCommand}"/>
             </MenuItem>
             <MenuItem Header="_Edit">
                 <MenuItem Header="_Add Question" Icon="{fa:Icon plus}" 
@@ -44,7 +44,7 @@
             <MenuItem Header="_View">
                 <MenuItem Header="_Play" 
                           Command="{Binding SwitchToPlayerViewCommand}"/>
-                <MenuItem Header="_Configure" 
+                <MenuItem Header="_Edit" 
                           Command="{Binding SwitchToConfigurationViewCommand}"/>
             </MenuItem>
         </Menu>

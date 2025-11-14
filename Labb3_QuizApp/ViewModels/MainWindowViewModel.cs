@@ -24,6 +24,8 @@ internal class MainWindowViewModel : ViewModelBase
     public DelegateCommand CreateNewPackCommand { get; }
 
     public DelegateCommand DeleteActivePackCommand { get; }
+
+    public DelegateCommand ExitGameCommand { get; }
     private QuestionPackViewModel _selectedPack;
     public QuestionPackViewModel SelectedPack
     {
@@ -105,6 +107,8 @@ internal class MainWindowViewModel : ViewModelBase
 
         SelectNewActivePackCommand = new DelegateCommand(SelectNewActivePack);
         DeleteActivePackCommand = new DelegateCommand(DeleteActivePack);
+
+        ExitGameCommand = new DelegateCommand(ExitGame);
 
         CurrentView = new ConfigurationView();
 
@@ -223,5 +227,10 @@ internal class MainWindowViewModel : ViewModelBase
                 MessageBox.Show($"Error importing pack: {ex.Message}");
             }
         }
+    }
+
+    public void ExitGame(object? arg)
+    {
+        Application.Current.Shutdown();
     }
 }
