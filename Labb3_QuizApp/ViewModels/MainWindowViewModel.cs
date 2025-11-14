@@ -207,7 +207,7 @@ internal class MainWindowViewModel : ViewModelBase
     }
     public async void OpenExternalImportOptions(object? arg)
     {
-        var viewModel = new ExternalImportOptionsViewModel(Packs);
+        var viewModel = new ExternalImportOptionsViewModel(_importerService);
         var window = new ExternalImportOptionsWIndow
         {
             DataContext = viewModel
@@ -220,10 +220,12 @@ internal class MainWindowViewModel : ViewModelBase
         {
             try
             {
+                string categoryParam = viewModel.SelectedCategory?.id == 0 ? 
+                                  "" : viewModel.SelectedCategory?.id.ToString();
 
-                var pack = await QuestionPackGeneratorAPIService.GetQuestionPackAsync(
+                var pack = await _importerService.GetQuestionPackAsync(
                     viewModel.NumberOfQuestions,
-                    viewModel.SelectedCategory,
+                    categoryParam, 
                     viewModel.SelectedDifficulty);
 
                 if (pack != null)

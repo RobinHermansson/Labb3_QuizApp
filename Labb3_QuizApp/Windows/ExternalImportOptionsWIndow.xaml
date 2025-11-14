@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Grid.ColumnSpan="2">
             <Label Content="Category" Margin="5 10 10 0" FontWeight="Bold"/>
-            <ComboBox Margin="10 10 10 0" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}"></ComboBox>
+            <ComboBox Margin="10 10 10 0" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}" DisplayMemberPath="name"></ComboBox>
             <Label Content="Difficulty" Margin="5 10 10 0" FontWeight="Bold"/>
             <ComboBox Margin="10 10 10 0" ItemsSource="{Binding DifficultyValues}" SelectedItem="{Binding SelectedDifficulty}"></ComboBox>
             <Label Content="Number of Questions" Margin="5 10 10 0" FontWeight="Bold"/>
