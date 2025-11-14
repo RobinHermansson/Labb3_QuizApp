@@ -15,10 +15,12 @@ class PackHandlerService
     private string _questionPacksName = "QuestionPacks.json";
     private string _localFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
     private string _fullPath;
+    private string _fullPathWithFileName;
 
     public PackHandlerService()
     {
         _fullPath = Path.Combine(_localFolder, _appName);
+        _fullPathWithFileName = Path.Combine(_fullPath, _questionPacksName); 
     }
 
     public List<QuestionPack> LoadAllPacks()
@@ -29,12 +31,12 @@ class PackHandlerService
         {
             Directory.CreateDirectory(_fullPath);
         }
-        if (!File.Exists(Path.Combine(_fullPath, _questionPacksName)))
+        if (!File.Exists(_fullPathWithFileName))
         {
-            File.Create(Path.Combine(_fullPath, _questionPacksName));
+            File.Create(_fullPathWithFileName);
             return new List<QuestionPack>() { new QuestionPack("<Default Empty Question Pack>") };
         }
-        return JsonSerializer.Deserialize<List<QuestionPack>>(File.ReadAllText(Path.Combine(_fullPath,_questionPacksName)));
+        return JsonSerializer.Deserialize<List<QuestionPack>>(File.ReadAllText(_fullPathWithFileName));
 
     }
 
@@ -44,6 +46,6 @@ class PackHandlerService
         {
             Directory.CreateDirectory(_fullPath);
         }
-        File.WriteAllText(Path.Combine(_fullPath, _questionPacksName), JsonSerializer.Serialize(qPacks));
+        File.WriteAllText(_fullPathWithFileName ,JsonSerializer.Serialize(qPacks));
     }
 }
