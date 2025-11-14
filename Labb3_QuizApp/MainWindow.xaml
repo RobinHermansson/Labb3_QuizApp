@@ -14,6 +14,7 @@
     <KeyBinding Key="F4" Modifiers="Alt" Command="{Binding ExitGameCommand}"/>
     <KeyBinding Key="Insert" Command="{Binding ConfigurationViewModel.AddNewQuestionCommand}"/>
     <KeyBinding Key="Delete" Command="{Binding ConfigurationViewModel.RemoveSelectedQuestionCommand}"/>
+    <KeyBinding Key="O" Modifiers="Ctrl"  Command="{Binding ConfigurationViewModel.OpenOptionsWindowCommand}"/>
 </Window.InputBindings>
 
     <Grid>

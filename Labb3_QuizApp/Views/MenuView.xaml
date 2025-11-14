@@ -41,6 +41,7 @@
                 <MenuItem Header="_Remove Question" Icon="{fa:Icon minus}" InputGestureText="Delete" Command="{Binding ConfigurationViewModel.RemoveSelectedQuestionCommand}"/>
                 <MenuItem Header="_Pack Options" Icon="{fa:Icon gear}"
                           Command="{Binding ConfigurationViewModel.OpenOptionsWindowCommand}"
+                          InputGestureText="Ctrl+O"
                           />
             </MenuItem>
             <MenuItem Header="_View">
