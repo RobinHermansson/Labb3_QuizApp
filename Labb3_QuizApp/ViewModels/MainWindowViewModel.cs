@@ -146,6 +146,7 @@ internal class MainWindowViewModel : ViewModelBase
             var newPack = viewModel.CreateQuestionPack();
             var newPackViewModel = new QuestionPackViewModel(newPack);
             Packs.Add(newPackViewModel);
+            ActivePack = newPackViewModel;
         }
     }
 
