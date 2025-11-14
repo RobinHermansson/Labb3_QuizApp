@@ -30,7 +30,7 @@
                 </MenuItem>
                 <MenuItem Header="_Delete Question Pack" 
                           Command="{Binding DeleteActivePackCommand}"/>
-                <MenuItem Header="_Import Question Pack" Command="{Binding OpenExternalImportOptionsCommand}"/>
+                <MenuItem Header="_Import Question Pack" Command="{Binding OpenExternalImportOptionsCommand}" InputGestureText="Ctrl+I"/>
                 <Separator/>
                 <MenuItem Header="E_xit" Icon="{fa:Icon DoorOpen}" Command="{Binding ExitGameCommand}"/>
             </MenuItem>
