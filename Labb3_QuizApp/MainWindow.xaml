@@ -12,6 +12,7 @@
     <KeyBinding Key="Enter" Modifiers="Alt" Command="{Binding FullScreenToggleCommand}"/>
     <KeyBinding Key="I" Modifiers="Ctrl" Command="{Binding OpenExternalImportOptionsCommand}"/>
     <KeyBinding Key="F4" Modifiers="Alt" Command="{Binding ExitGameCommand}"/>
+    <KeyBinding Key="Insert" Command="{Binding ConfigurationViewModel.AddNewQuestionCommand}"/>
 </Window.InputBindings>
 
     <Grid>

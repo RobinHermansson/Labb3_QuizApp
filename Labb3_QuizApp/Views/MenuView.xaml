@@ -36,7 +36,8 @@
             </MenuItem>
             <MenuItem Header="_Edit">
                 <MenuItem Header="_Add Question" Icon="{fa:Icon plus}" 
-                          InputGestureText="Ctrl+A"/>
+                          InputGestureText="Insert"
+                          />
                 <MenuItem Header="_Remove Question" Icon="{fa:Icon minus}"/>
                 <MenuItem Header="_Pack Options" Icon="{fa:Icon gear}"
                           Command="{Binding ConfigurationViewModel.OpenOptionsWindowCommand}"/>
