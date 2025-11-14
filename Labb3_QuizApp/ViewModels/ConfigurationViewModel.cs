@@ -28,6 +28,7 @@ class ConfigurationViewModel : ViewModelBase
         {
             _selectedQuestion = value;
             RaisePropertyChanged();
+            RemoveSelectedQuestionCommand.RaiseCanExecuteChanged();
         }
     }
     public ConfigurationViewModel(MainWindowViewModel? mainWindowViewModel)
@@ -56,11 +57,7 @@ class ConfigurationViewModel : ViewModelBase
     }
     public bool CanRemoveSelectedQuestion(object? arg)
     {
-        if (arg is Question)
-        {
-            return true;
-        }
-        return false;
+        return SelectedQuestion != null;
     }
 
     

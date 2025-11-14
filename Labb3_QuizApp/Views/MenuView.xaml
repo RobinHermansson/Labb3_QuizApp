@@ -38,9 +38,10 @@
                 <MenuItem Header="_Add Question" Icon="{fa:Icon plus}" 
                           InputGestureText="Insert"
                           />
-                <MenuItem Header="_Remove Question" Icon="{fa:Icon minus}"/>
+                <MenuItem Header="_Remove Question" Icon="{fa:Icon minus}" InputGestureText="Delete" Command="{Binding ConfigurationViewModel.RemoveSelectedQuestionCommand}"/>
                 <MenuItem Header="_Pack Options" Icon="{fa:Icon gear}"
-                          Command="{Binding ConfigurationViewModel.OpenOptionsWindowCommand}"/>
+                          Command="{Binding ConfigurationViewModel.OpenOptionsWindowCommand}"
+                          />
             </MenuItem>
             <MenuItem Header="_View">
                 <MenuItem Header="_Play" 

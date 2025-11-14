@@ -13,6 +13,7 @@
     <KeyBinding Key="I" Modifiers="Ctrl" Command="{Binding OpenExternalImportOptionsCommand}"/>
     <KeyBinding Key="F4" Modifiers="Alt" Command="{Binding ExitGameCommand}"/>
     <KeyBinding Key="Insert" Command="{Binding ConfigurationViewModel.AddNewQuestionCommand}"/>
+    <KeyBinding Key="Delete" Command="{Binding ConfigurationViewModel.RemoveSelectedQuestionCommand}"/>
 </Window.InputBindings>
 
     <Grid>
