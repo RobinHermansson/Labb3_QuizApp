@@ -48,7 +48,7 @@
                 <MenuItem Header="_Play" 
                           Command="{Binding SwitchToPlayerViewCommand}" InputGestureText="Ctrl+P"/>
                 <MenuItem Header="_Edit" 
-                          Command="{Binding SwitchToConfigurationViewCommand}"/>
+                          Command="{Binding SwitchToConfigurationViewCommand}" InputGestureText="Ctrl+E"/>
                 <Separator/>
                 <MenuItem Header="_Full screen mode" Command="{Binding FullScreenToggleCommand}" InputGestureText="Alt+Enter"/>
             </MenuItem>
