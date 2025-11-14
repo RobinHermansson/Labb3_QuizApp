@@ -17,6 +17,7 @@ class PlayerViewModel : ViewModelBase
     public DelegateCommand SelectAnswerCommand { get; }
 
     private int _correctlyAnsweredCount = 0;
+    private List<QuestionViewModel> _shuffledQuestions;
 
     public int CorrectlyAnsweredCount
     {
@@ -24,10 +25,6 @@ class PlayerViewModel : ViewModelBase
         set { _correctlyAnsweredCount = value; }
     }
 
-
-    public QuestionViewModel CurrentQuestionViewModel;
-
-    private int _questionSet = 0;
 
     private DispatcherTimer _timer;
     private int _initialTimerValue = 30;
@@ -43,7 +40,6 @@ class PlayerViewModel : ViewModelBase
         }
     }
 
-    private List<QuestionViewModel> _questionViewModels;
 
     private string _currentQuestionOutOfTotal = "";
     public string CurrentQuestionOutOfTotal
@@ -65,9 +61,10 @@ class PlayerViewModel : ViewModelBase
         {
             _currentQuestion = value;
             RaisePropertyChanged();
-            CurrentQuestionOutOfTotal = $"Question {QuestionSet + 1} out of {ActivePack.Questions.Count}";
+            CurrentQuestionOutOfTotal = $"Question {QuestionSet + 1} out of {_shuffledQuestions.Count}";
         }
     }
+    private int _questionSet = 0;
     public int QuestionSet
     {
         get => _questionSet;
@@ -130,7 +127,10 @@ class PlayerViewModel : ViewModelBase
 
     public void PlayGame(object? arg)
     {
-
+        _shuffledQuestions = ActivePack.Questions
+            .Select(q => new QuestionViewModel(q))
+            .OrderBy(q => Guid.NewGuid())
+            .ToList();
         LoadCurrentQuestion();
 
     }
@@ -143,12 +143,12 @@ class PlayerViewModel : ViewModelBase
 
     private void LoadCurrentQuestion()
     {
-        if (ActivePack?.Questions != null &&
+        if (_shuffledQuestions != null &&
             QuestionSet >= 0 &&
-            QuestionSet < ActivePack.Questions.Count)
+            QuestionSet < _shuffledQuestions.Count)
         {
-            CurrentQuestion = new QuestionViewModel(ActivePack.Questions[QuestionSet]);
-            CurrentQuestionOutOfTotal = $"Question {QuestionSet + 1} out of {ActivePack.Questions.Count}";
+            CurrentQuestion = _shuffledQuestions[QuestionSet];
+            CurrentQuestionOutOfTotal = $"Question {QuestionSet + 1} out of {_shuffledQuestions.Count}";
         }
         ResetTimer();
     }
@@ -184,7 +184,7 @@ class PlayerViewModel : ViewModelBase
 
     private void NextQuestion()
     {
-        if (QuestionSet < ActivePack.Questions.Count - 1)
+        if (QuestionSet < _shuffledQuestions.Count - 1)
         {
             QuestionSet++;
             LoadCurrentQuestion();
@@ -192,8 +192,9 @@ class PlayerViewModel : ViewModelBase
         else
         {
             _timer.Stop();
-            MessageBox.Show($"Quiz completed! You got {CorrectlyAnsweredCount} correct!");
+            MessageBox.Show($"Quiz completed! You got {CorrectlyAnsweredCount} correct! out of {_shuffledQuestions.Count}");
             CorrectlyAnsweredCount = 0;
+            QuestionSet = 0;
             _mainWindowViewModel.SwitchToConfigurationView(this);
         }
     }
