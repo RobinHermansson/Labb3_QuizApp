@@ -132,6 +132,7 @@ internal class MainWindowViewModel : ViewModelBase
     {
         CurrentView = new PlayerView();
         PlayerViewModel.PlayGame(arg);
+        SwitchToConfigurationViewCommand.RaiseCanExecuteChanged();
     }
 
     public bool CanSwitchToPlayerView(object? arg)
