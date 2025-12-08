@@ -25,6 +25,13 @@ class PlayerViewModel : ViewModelBase
         set { _correctlyAnsweredCount = value; }
     }
 
+    private bool _hasClickedAnswer = false;
+    public bool HasClickedAnswer
+    {
+        get { return _hasClickedAnswer; }
+        set { _hasClickedAnswer = value; }
+    }
+
 
     private DispatcherTimer _timer;
     private int _initialTimerValue = 30;
@@ -122,7 +129,10 @@ class PlayerViewModel : ViewModelBase
             advanceTimer.Stop();
             NextQuestion();
         };
-        advanceTimer.Start();
+        if (!HasClickedAnswer)
+        {
+            advanceTimer.Start();
+        }
     }
 
     public void PlayGame(object? arg)
@@ -158,7 +168,7 @@ class PlayerViewModel : ViewModelBase
         if (answer == null) return;
         _timer.Stop();
 
-        if (answer is AnswerOptionViewModel asModel)
+        if (answer is AnswerOptionViewModel asModel && !HasClickedAnswer)
         {
             bool isCorrectAnswer = asModel.IsCorrect;
             if (isCorrectAnswer)
@@ -178,8 +188,8 @@ class PlayerViewModel : ViewModelBase
                 }
             }
         }
-
         StartDelayedAdvance();
+        HasClickedAnswer = true;
     }
 
     private void NextQuestion()
@@ -187,15 +197,17 @@ class PlayerViewModel : ViewModelBase
         if (QuestionSet < _shuffledQuestions.Count - 1)
         {
             QuestionSet++;
+            HasClickedAnswer = false;
             LoadCurrentQuestion();
         }
         else
         {
             _timer.Stop();
+            _mainWindowViewModel.SwitchToConfigurationView(this);
             MessageBox.Show($"Quiz completed! You got {CorrectlyAnsweredCount} correct! out of {_shuffledQuestions.Count}");
             CorrectlyAnsweredCount = 0;
+            HasClickedAnswer = false;
             QuestionSet = 0;
-            _mainWindowViewModel.SwitchToConfigurationView(this);
         }
     }
 }
