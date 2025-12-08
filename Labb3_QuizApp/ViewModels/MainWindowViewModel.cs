@@ -136,7 +136,7 @@ internal class MainWindowViewModel : ViewModelBase
 
     public bool CanSwitchToPlayerView(object? arg)
     {
-        return !(CurrentView is PlayerView);
+        return !(CurrentView is PlayerView) && ActivePack?.Questions.Count > 0;
     }
     public void SwitchToConfigurationView(object? arg)
     {

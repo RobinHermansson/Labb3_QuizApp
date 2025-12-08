@@ -57,6 +57,7 @@ class ConfigurationViewModel : ViewModelBase
     public void AddNewQuestion(object? arg)
     {
         ActivePack.Questions.Add(new Question("<New Question>", "", "", "", ""));
+        _mainWindowViewModel.SwitchToPlayerViewCommand.RaiseCanExecuteChanged();
     }
     public bool CanAddNewQuestion(object? arg)
     {
@@ -65,6 +66,7 @@ class ConfigurationViewModel : ViewModelBase
     public void RemoveSelectedQuestion(object? arg)
     {
         ActivePack.Questions.Remove(SelectedQuestion);
+        _mainWindowViewModel.SwitchToPlayerViewCommand.RaiseCanExecuteChanged();
     }
     public bool CanRemoveSelectedQuestion(object? arg)
     {
