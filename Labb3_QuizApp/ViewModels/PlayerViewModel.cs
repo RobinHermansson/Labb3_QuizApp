@@ -116,7 +116,7 @@ class PlayerViewModel : ViewModelBase
     {
         _timer.Stop();
 
-        TimerText = _initialTimerValue;
+        TimerText = ActivePack.TimeLimitInSeconds;
 
         _timer.Start();
     }
