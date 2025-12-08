@@ -96,7 +96,7 @@
                 Grid.ColumnSpan="2" 
                 TickPlacement="BottomRight" 
                 Value="{Binding TimeLimitInSeconds}"
-                Minimum="0"
+                Minimum="1"
                 Maximum="120"
                 Margin="10 0 10 0"
                 TickFrequency="5"
