@@ -1,4 +1,5 @@
 ﻿using Labb3_QuizApp.Command;
+using Labb3_QuizApp.Views;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -203,8 +204,11 @@ class PlayerViewModel : ViewModelBase
         else
         {
             _timer.Stop();
+            if (_mainWindowViewModel.CurrentView is PlayerView)
+            {
+                MessageBox.Show($"Quiz completed! You got {CorrectlyAnsweredCount} correct! out of {_shuffledQuestions.Count}");
+            }
             _mainWindowViewModel.SwitchToConfigurationView(this);
-            MessageBox.Show($"Quiz completed! You got {CorrectlyAnsweredCount} correct! out of {_shuffledQuestions.Count}");
             CorrectlyAnsweredCount = 0;
             HasClickedAnswer = false;
             QuestionSet = 0;
