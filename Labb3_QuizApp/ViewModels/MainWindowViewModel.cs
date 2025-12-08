@@ -109,8 +109,8 @@ internal class MainWindowViewModel : ViewModelBase
         ImportExternalQuestionPackCommand = new DelegateCommand(ImportExternalQuestionPack);
         OpenExternalImportOptionsCommand = new DelegateCommand(OpenExternalImportOptions);
 
-        SwitchToConfigurationViewCommand = new DelegateCommand(SwitchToConfigurationView);
-        SwitchToPlayerViewCommand = new DelegateCommand(SwitchToPlayerView);
+        SwitchToConfigurationViewCommand = new DelegateCommand(SwitchToConfigurationView, CanSwitchToConfigurationView);
+        SwitchToPlayerViewCommand = new DelegateCommand(SwitchToPlayerView, CanSwitchToPlayerView);
 
         SelectNewActivePackCommand = new DelegateCommand(SelectNewActivePack);
         DeleteActivePackCommand = new DelegateCommand(DeleteActivePack);
@@ -133,10 +133,21 @@ internal class MainWindowViewModel : ViewModelBase
         CurrentView = new PlayerView();
         PlayerViewModel.PlayGame(arg);
     }
+
+    public bool CanSwitchToPlayerView(object? arg)
+    {
+        return !(CurrentView is PlayerView);
+    }
     public void SwitchToConfigurationView(object? arg)
     {
         CurrentView = new ConfigurationView();
     }
+
+    public bool CanSwitchToConfigurationView(object? arg)
+    {
+        return !(CurrentView is ConfigurationView);
+    }
+
     public void CreateNewPack(object? arg)
     {
         var viewModel = new OptionsWindowViewModel();
