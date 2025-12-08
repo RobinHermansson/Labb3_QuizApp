@@ -1,4 +1,5 @@
-﻿using Labb3_QuizApp.Command;
+﻿using FontAwesome.Sharp;
+using Labb3_QuizApp.Command;
 using Labb3_QuizApp.Models;
 using Labb3_QuizApp.Services;
 
@@ -27,7 +28,20 @@ class ConfigurationViewModel : ViewModelBase
             _selectedQuestion = value;
             RaisePropertyChanged();
             RemoveSelectedQuestionCommand.RaiseCanExecuteChanged();
+
+            AreConfigureQuestionTextboxesEnabled = (value != null);
         }
+    }
+    private bool _areConfigureQuestionTextboxesEnabled = false;
+    public bool AreConfigureQuestionTextboxesEnabled
+    {
+        get { return _areConfigureQuestionTextboxesEnabled; }
+        set
+        {
+            _areConfigureQuestionTextboxesEnabled = value;
+            RaisePropertyChanged();
+        }
+        
     }
     public ConfigurationViewModel(MainWindowViewModel? mainWindowViewModel)
     {
