@@ -179,14 +179,7 @@ class PlayerViewModel : ViewModelBase
 
             foreach (var option in CurrentQuestion.AnswerOptions)
             {
-                if (isCorrectAnswer)
-                {
-                    option.State = option == asModel ? AnswerState.Correct : AnswerState.Neutral;
-                }
-                else
-                {
-                    option.State = option.IsCorrect ? AnswerState.Correct : AnswerState.Incorrect;
-                }
+                option.State = option.IsCorrect ? AnswerState.Correct : AnswerState.Incorrect;    
             }
         }
         StartDelayedAdvance();

@@ -10,6 +10,25 @@
              DataContext="{Binding PlayerViewModel}">
     <UserControl.Resources>
         <answertostateconverter:AnswerToStateConverter x:Key="AnswerToStateConverter"/>
+        <Style x:Key="AnswerButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                      VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="BorderBrush" Value="#FF707070"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="20"/>
+        </Style>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -47,6 +66,7 @@
                             Padding="15"
                             MinWidth="200"
                             MinHeight="75"
+                            Style="{StaticResource AnswerButtonStyle}"
                             Command="{Binding DataContext.SelectAnswerCommand, 
                                       RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                             CommandParameter="{Binding}"
