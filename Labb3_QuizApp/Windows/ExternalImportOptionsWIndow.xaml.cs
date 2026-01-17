@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Labb3_QuizApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +18,19 @@ namespace Labb3_QuizApp.Windows
     /// <summary>
     /// Interaction logic for ExternalImportOptionsWIndow.xaml
     /// </summary>
-    public partial class ExternalImportOptionsWIndow : Window
+    public partial class ExternalImportOptionsWindow : Window
     {
-        public ExternalImportOptionsWIndow()
+        public ExternalImportOptionsWindow()
         {
             InitializeComponent();
+            Loaded += ExternalImportOptionsWindow_Loaded;
         }
+        private async void ExternalImportOptionsWindow_Loaded(object sender, RoutedEventArgs e)
+    {
+        if (DataContext is ExternalImportOptionsViewModel vm)
+        {
+            await vm.InitializeAsync();
+        }
+    }
     }
 }

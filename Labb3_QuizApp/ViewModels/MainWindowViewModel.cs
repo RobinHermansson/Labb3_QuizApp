@@ -230,7 +230,7 @@ internal class MainWindowViewModel : ViewModelBase
     public async void OpenExternalImportOptions(object? arg)
     {
         var viewModel = new ExternalImportOptionsViewModel(_importerService);
-        var window = new ExternalImportOptionsWIndow
+        var window = new ExternalImportOptionsWindow
         {
             DataContext = viewModel
         };

@@ -2,6 +2,7 @@
 using Labb3_QuizApp.Models;
 using Labb3_QuizApp.Services;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows;
 
 namespace Labb3_QuizApp.ViewModels;
@@ -65,7 +66,6 @@ class ExternalImportOptionsViewModel : ViewModelBase
         _categories = new List<TriviaCategory>();
         CancelCommand = new DelegateCommand(Cancel);
         ImportCommand = new DelegateCommand(Import, CanImport);
-        LoadCategoriesAsync();
     }
     public void SetDialogWindow(Window window)
     {
@@ -87,30 +87,29 @@ class ExternalImportOptionsViewModel : ViewModelBase
     {
         return SelectedCategory != null;
     }
-    private async void LoadCategoriesAsync()
+    public async Task InitializeAsync()
     {
         IsLoading = true;
-        
         try
         {
             var categories = await _apiService.GetCategoriesAsync();
-            
-            // Add "Any Category" at the top if it doesn't exist
             if (!categories.Any(c => c.id == 0))
             {
                 categories.Insert(0, new TriviaCategory { id = 0, name = "Any Category" });
             }
-            
+
             Categories = categories;
             SelectedCategory = Categories[0];
         }
+
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Error loading categories: {ex.Message}");
+            Debug.WriteLine($"Error loading categories: {ex.Message}");
         }
         finally
         {
             IsLoading = false;
         }
-    }
+
+        }
 }
