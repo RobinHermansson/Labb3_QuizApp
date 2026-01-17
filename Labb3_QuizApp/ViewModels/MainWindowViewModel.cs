@@ -4,6 +4,7 @@ using Labb3_QuizApp.Services;
 using Labb3_QuizApp.Views;
 using Labb3_QuizApp.Windows;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -124,7 +125,16 @@ internal class MainWindowViewModel : ViewModelBase
 
         var allPacks = _packHandlerService.LoadAllPacks();
         allPacks.ForEach(p => Packs.Add(new QuestionPackViewModel(p)));
-        ActivePack = Packs[0];
+        if (allPacks.Count == 0)
+        {
+            var question = new Question("What is the meaning of life?", "42", "Living.", "Life of Brian.", "It is 42, so pick that.");
+            ActivePack = new QuestionPackViewModel(new QuestionPack("Starter pack", Difficulty.Medium));
+            ActivePack.Questions.Add(question);
+        }
+        else
+        {
+            ActivePack = Packs[0];
+        }
 
     }
 
