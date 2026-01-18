@@ -5,21 +5,7 @@ namespace Labb3_QuizApp.Services;
 
 public class DialogService : IDialogService
 {
-    public bool? ShowOptionsDialog(QuestionPackViewModel packToEdit = null)
-    {
-        var viewModel = new OptionsWindowViewModel(packToEdit);
-        
-        var window = new OptionsWindow
-        {
-            DataContext = viewModel
-        };
-        
-        var result = window.ShowDialog();
-        
-        return viewModel.DialogResult ? true : (result == true ? true : false);
-    }
     
-    // Simple dialogs
     public bool ShowConfirmation(string message, string title = "")
     {
         return MessageBox.Show(message, title, MessageBoxButton.YesNo) == MessageBoxResult.Yes;

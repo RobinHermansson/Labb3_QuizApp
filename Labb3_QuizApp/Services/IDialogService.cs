@@ -9,6 +9,4 @@ public interface IDialogService
     Task ShowMessageAsync(string message, string title = "");
     void ShowMessage(string message, string title = "");
     void ShowError(string message, string title = "");
-
-    bool? ShowOptionsDialog(QuestionPackViewModel packToEdit = null);
 }
