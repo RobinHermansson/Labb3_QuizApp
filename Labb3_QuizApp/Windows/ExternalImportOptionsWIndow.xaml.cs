@@ -26,11 +26,11 @@ namespace Labb3_QuizApp.Windows
             Loaded += ExternalImportOptionsWindow_Loaded;
         }
         private async void ExternalImportOptionsWindow_Loaded(object sender, RoutedEventArgs e)
-    {
-        if (DataContext is ExternalImportOptionsViewModel vm)
         {
-            await vm.InitializeAsync();
+            if (DataContext is ExternalImportOptionsViewModel vm)
+            {
+                await vm.InitializeAsync();
+            }
         }
-    }
     }
 }
