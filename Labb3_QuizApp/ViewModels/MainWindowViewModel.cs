@@ -138,7 +138,7 @@ internal class MainWindowViewModel : ViewModelBase
     public void CreateNewPack(object? arg)
     {
         var viewModel = new OptionsWindowViewModel();
-        ShowOptionsDialog(viewModel);
+        ShowOptionsWindow(viewModel);
         if (viewModel.DialogResult)
         {
             var newPack = viewModel.CreateQuestionPack();
@@ -170,20 +170,16 @@ internal class MainWindowViewModel : ViewModelBase
         if (ActivePack == null) return;
 
         var viewModel = new OptionsWindowViewModel(ActivePack);
-        ShowOptionsDialog(viewModel);
+        ShowOptionsWindow(viewModel);
     }
 
-    public void ShowOptionsDialog(OptionsWindowViewModel viewModel)
+    private bool? ShowOptionsWindow(OptionsWindowViewModel viewModel)
     {
-        var optionsWindow = new OptionsWindow
-        {
-            DataContext = viewModel
-        };
-
-        viewModel.SetDialogWindow(optionsWindow);
-        optionsWindow.ShowDialog();
+        var window = new OptionsWindow { DataContext = viewModel };
+        viewModel.CloseRequested += (s, e) => window.Close();
+        window.ShowDialog();
+        return viewModel.DialogResult ? true : false;
     }
-
     public async void ImportExternalQuestionPack(object? arg)
     {
 

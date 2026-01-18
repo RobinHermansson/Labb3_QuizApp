@@ -5,7 +5,6 @@ using System.Windows;
 
 class OptionsWindowViewModel : ViewModelBase
 {
-    private Window _dialogWindow;
     public bool DialogResult { get; private set; }
 
     public bool IsEditMode { get; private set; }
@@ -21,6 +20,7 @@ class OptionsWindowViewModel : ViewModelBase
 
     public DelegateCommand CancelCommand { get; }
     public DelegateCommand ConfirmCommand { get; }
+    public event EventHandler? CloseRequested;
 
     public OptionsWindowViewModel(QuestionPackViewModel packToEdit = null)
     {
@@ -45,11 +45,6 @@ class OptionsWindowViewModel : ViewModelBase
         ConfirmCommand = new DelegateCommand(_ => Confirm(), _ => CanConfirm());
     }
 
-    public void SetDialogWindow(Window window)
-    {
-        _dialogWindow = window;
-    }
-
     private bool CanConfirm()
     {
         return !string.IsNullOrWhiteSpace(Name);
@@ -58,7 +53,7 @@ class OptionsWindowViewModel : ViewModelBase
     private void Cancel()
     {
         DialogResult = false;
-        _dialogWindow?.Close();
+        CloseRequested?.Invoke(this, EventArgs.Empty);
     }
 
     private void Confirm()
@@ -72,7 +67,8 @@ class OptionsWindowViewModel : ViewModelBase
             _originalPack.TimeLimitInSeconds = this.TimeLimitInSeconds;
         }
 
-        _dialogWindow?.Close();
+        CloseRequested?.Invoke(this, EventArgs.Empty);
+   
     }
 
     public QuestionPack CreateQuestionPack()
