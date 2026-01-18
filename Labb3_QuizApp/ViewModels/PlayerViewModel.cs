@@ -1,4 +1,5 @@
 ﻿using Labb3_QuizApp.Command;
+using Labb3_QuizApp.Services;
 using Labb3_QuizApp.Views;
 using System.Windows;
 using System.Windows.Threading;
@@ -8,6 +9,7 @@ namespace Labb3_QuizApp.ViewModels;
 class PlayerViewModel : ViewModelBase
 {
     private readonly MainWindowViewModel? _mainWindowViewModel;
+    private readonly IDialogService _dialogService;
 
     public DelegateCommand SetPackNameCommand { get; }
 
@@ -83,9 +85,10 @@ class PlayerViewModel : ViewModelBase
         }
     }
 
-    public PlayerViewModel(MainWindowViewModel? mainWindowViewModel)
+    public PlayerViewModel(MainWindowViewModel? mainWindowViewModel, IDialogService dialogService)
     {
         _mainWindowViewModel = mainWindowViewModel;
+        _dialogService = dialogService;
         PlayGameCommand = new DelegateCommand(PlayGame, CanPlayGame);
 
         SelectAnswerCommand = new DelegateCommand(SelectAnswer);
@@ -199,7 +202,7 @@ class PlayerViewModel : ViewModelBase
             _timer.Stop();
             if (_mainWindowViewModel.CurrentViewModel is PlayerViewModel)
             {
-                MessageBox.Show($"Quiz completed! You got {CorrectlyAnsweredCount} correct! out of {_shuffledQuestions.Count}");
+                _dialogService.ShowMessage($"Quiz completed! You got {CorrectlyAnsweredCount} correct! out of {_shuffledQuestions.Count}");
             }
             _mainWindowViewModel.SwitchToConfigurationView(this);
             CorrectlyAnsweredCount = 0;

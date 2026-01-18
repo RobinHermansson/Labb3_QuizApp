@@ -83,7 +83,7 @@ internal class MainWindowViewModel : ViewModelBase
     public MainWindowViewModel()
     {
         _dialogService = new DialogService();
-        PlayerViewModel = new PlayerViewModel(this);
+        PlayerViewModel = new PlayerViewModel(this, _dialogService);
         ConfigurationViewModel = new ConfigurationViewModel(this);
         QuestionPackGeneratorAPIService = new QuestionPackGeneratorAPIService();
         CreateNewPackCommand = new DelegateCommand(CreateNewPack);
