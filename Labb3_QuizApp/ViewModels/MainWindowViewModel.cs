@@ -5,7 +5,6 @@ using Labb3_QuizApp.Windows;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace Labb3_QuizApp.ViewModels;
 
@@ -21,7 +20,7 @@ internal class MainWindowViewModel : ViewModelBase
     public ViewModelBase CurrentViewModel
     {
         get => _currentViewModel;
-        set 
+        set
         {
             _currentViewModel = value;
             RaisePropertyChanged();
@@ -170,7 +169,11 @@ internal class MainWindowViewModel : ViewModelBase
         if (ActivePack == null) return;
 
         var viewModel = new OptionsWindowViewModel(ActivePack);
-        ShowOptionsWindow(viewModel);
+        bool? saved = ShowOptionsWindow(viewModel);
+        if (saved != null && saved is true)
+        {
+            _dialogService.ShowMessage("Saved pack.", "Saved.");
+        }
     }
 
     private bool? ShowOptionsWindow(OptionsWindowViewModel viewModel)
@@ -195,7 +198,8 @@ internal class MainWindowViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Error importing question pack: {ex.Message}");
+            _dialogService.ShowError($"Error importing question pack.", "ERROR");
+            Debug.WriteLine($"Error importing question pack: {ex.Message}");
         }
 
     }
@@ -214,12 +218,12 @@ internal class MainWindowViewModel : ViewModelBase
         {
             try
             {
-                string categoryParam = viewModel.SelectedCategory?.id == 0 ? 
+                string categoryParam = viewModel.SelectedCategory?.id == 0 ?
                                   "" : viewModel.SelectedCategory?.id.ToString();
 
                 var pack = await _importerService.GetQuestionPackAsync(
                     viewModel.NumberOfQuestions,
-                    categoryParam, 
+                    categoryParam,
                     viewModel.SelectedDifficulty);
 
                 if (pack != null)
@@ -228,10 +232,12 @@ internal class MainWindowViewModel : ViewModelBase
                     Packs.Add(packViewModel);
                     ActivePack = packViewModel;
                 }
+                _dialogService.ShowMessage("Successfully imported question pack", "Success!");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error importing pack: {ex.Message}");
+                _dialogService.ShowError("Error importing pack.", "ERROR");
+                Debug.WriteLine($"Error importing pack: {ex.Message}");
             }
         }
     }
