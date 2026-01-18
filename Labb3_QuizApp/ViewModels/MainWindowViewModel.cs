@@ -32,8 +32,8 @@ internal class MainWindowViewModel : ViewModelBase
     private QuestionPackGeneratorAPIService _importerService;
     private PackHandlerService _packHandlerService;
 
-    public DelegateCommand ImportExternalQuestionPackCommand { get; }
-    public DelegateCommand OpenExternalImportOptionsCommand { get; }
+    public AsyncDelegateCommand ImportExternalQuestionPackCommand { get; }
+    public AsyncDelegateCommand OpenExternalImportOptionsCommand { get; }
 
     public DelegateCommand SwitchToPlayerViewCommand { get; }
     public DelegateCommand SwitchToConfigurationViewCommand { get; }
@@ -82,8 +82,8 @@ internal class MainWindowViewModel : ViewModelBase
         _packHandlerService = new PackHandlerService();
 
         _importerService = new QuestionPackGeneratorAPIService();
-        ImportExternalQuestionPackCommand = new DelegateCommand(ImportExternalQuestionPack);
-        OpenExternalImportOptionsCommand = new DelegateCommand(OpenExternalImportOptions);
+        ImportExternalQuestionPackCommand = new AsyncDelegateCommand(ImportExternalQuestionPack);
+        OpenExternalImportOptionsCommand = new AsyncDelegateCommand(OpenExternalImportOptions);
 
         SwitchToConfigurationViewCommand = new DelegateCommand(SwitchToConfigurationView, CanSwitchToConfigurationView);
         SwitchToPlayerViewCommand = new DelegateCommand(SwitchToPlayerView, CanSwitchToPlayerView);
@@ -183,7 +183,7 @@ internal class MainWindowViewModel : ViewModelBase
         window.ShowDialog();
         return viewModel.DialogResult ? true : false;
     }
-    public async void ImportExternalQuestionPack(object? arg)
+    public async Task ImportExternalQuestionPack(object? arg)
     {
 
         try
@@ -203,7 +203,7 @@ internal class MainWindowViewModel : ViewModelBase
         }
 
     }
-    public async void OpenExternalImportOptions(object? arg)
+    public async Task OpenExternalImportOptions(object? arg)
     {
         var viewModel = new ExternalImportOptionsViewModel(_importerService);
         var window = new ExternalImportOptionsWindow
