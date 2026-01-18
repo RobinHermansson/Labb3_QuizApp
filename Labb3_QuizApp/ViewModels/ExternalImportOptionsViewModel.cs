@@ -9,9 +9,10 @@ namespace Labb3_QuizApp.ViewModels;
 
 class ExternalImportOptionsViewModel : ViewModelBase
 {
-    private Window _dialogWindow;
     private readonly QuestionPackGeneratorAPIService _apiService;
     private List<TriviaCategory> _categories;
+
+    public event EventHandler? CloseRequested;
     public List<TriviaCategory> Categories
     {
         get => _categories;
@@ -67,21 +68,16 @@ class ExternalImportOptionsViewModel : ViewModelBase
         CancelCommand = new DelegateCommand(Cancel);
         ImportCommand = new DelegateCommand(Import, CanImport);
     }
-    public void SetDialogWindow(Window window)
-    {
-        _dialogWindow = window;
-    }
-
     private void Cancel(object? arg)
     {
         DialogResult = false;
-        _dialogWindow?.Close();
+        CloseRequested?.Invoke(this, EventArgs.Empty);
     }
 
     private void Import(object? arg)
     {
         DialogResult = true;
-        _dialogWindow?.Close();
+        CloseRequested?.Invoke(this, EventArgs.Empty);
     }
     private bool CanImport(object? arg)
     {

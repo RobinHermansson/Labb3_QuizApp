@@ -40,18 +40,20 @@ public partial class MainWindow : Window
     private void ViewModel_FullscreenToggleRequested(object? sender, EventArgs e)
     {
         if (DataContext is MainWindowViewModel viewModel)
-        if (viewModel.IsFullscreen)
         {
-            WindowStyle = WindowStyle.None;
-            WindowState = WindowState.Maximized;
-            ResizeMode = ResizeMode.NoResize;
-        }
-        else
-        {
-            WindowStyle = WindowStyle.SingleBorderWindow;
-            WindowState = WindowState.Normal;
-            ResizeMode = ResizeMode.CanResize;
-        }
+            if (viewModel.IsFullscreen)
+            {
+                WindowStyle = WindowStyle.None;
+                WindowState = WindowState.Maximized;
+                ResizeMode = ResizeMode.NoResize;
+            }
+            else
+            {
+                WindowStyle = WindowStyle.SingleBorderWindow;
+                WindowState = WindowState.Normal;
+                ResizeMode = ResizeMode.CanResize;
+            }
+        }    
 
     }
 

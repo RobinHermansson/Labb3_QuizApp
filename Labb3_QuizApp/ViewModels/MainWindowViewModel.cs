@@ -219,8 +219,10 @@ internal class MainWindowViewModel : ViewModelBase
         {
             DataContext = viewModel
         };
-        viewModel.SetDialogWindow(window);
 
+        viewModel.CloseRequested += (s, e) => window.Close();
+
+        await viewModel.InitializeAsync();
         window.ShowDialog();
 
         if (viewModel.DialogResult)
