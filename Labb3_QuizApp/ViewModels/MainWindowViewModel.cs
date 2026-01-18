@@ -240,10 +240,13 @@ internal class MainWindowViewModel : ViewModelBase
                 if (pack != null)
                 {
                     var packViewModel = new QuestionPackViewModel(pack);
+                    foreach (var question in packViewModel.Questions)
+                    {
+                        ActivePack.Questions.Add(question);   
+                    }
                     Packs.Add(packViewModel);
-                    ActivePack = packViewModel;
                 }
-                _dialogService.ShowMessage("Successfully imported question pack", "Success!");
+                _dialogService.ShowMessage("Successfully imported question pack. Added questions to Active Pack and also to list of packs separately.", "Success!");
             }
             catch (Exception ex)
             {
