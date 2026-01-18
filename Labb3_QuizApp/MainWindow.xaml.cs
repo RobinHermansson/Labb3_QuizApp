@@ -15,7 +15,7 @@ public partial class MainWindow : Window
         Closing += MainWindow_Closing;
         if (DataContext is MainWindowViewModel viewModel)
         {
-            viewModel.SetMainWindow(this);
+            viewModel.FullScreenToggleRequested += ViewModel_FullscreenToggleRequested;
         }
 
     }
@@ -35,6 +35,24 @@ public partial class MainWindow : Window
                 System.Diagnostics.Debug.WriteLine($"Error saving packs on exit: {ex.Message}");
             }
         }
+    }
+
+    private void ViewModel_FullscreenToggleRequested(object? sender, EventArgs e)
+    {
+        if (DataContext is MainWindowViewModel viewModel)
+        if (viewModel.IsFullscreen)
+        {
+            WindowStyle = WindowStyle.None;
+            WindowState = WindowState.Maximized;
+            ResizeMode = ResizeMode.NoResize;
+        }
+        else
+        {
+            WindowStyle = WindowStyle.SingleBorderWindow;
+            WindowState = WindowState.Normal;
+            ResizeMode = ResizeMode.CanResize;
+        }
+
     }
 
 }

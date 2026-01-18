@@ -12,9 +12,18 @@ internal class MainWindowViewModel : ViewModelBase
 {
     private readonly IDialogService _dialogService;
 
-    private Window _mainWindow;
-
     private bool _isFullscreen;
+    public bool IsFullscreen
+    {
+        get => _isFullscreen;
+        set
+        {
+            _isFullscreen = value;
+            RaisePropertyChanged();
+        }
+    }
+
+    public event EventHandler? FullScreenToggleRequested;
 
     private ViewModelBase _currentViewModel;
     public ViewModelBase CurrentViewModel
@@ -242,29 +251,12 @@ internal class MainWindowViewModel : ViewModelBase
         }
     }
 
-    public void SetMainWindow(Window window)
-    {
-        _mainWindow = window;
-    }
-
     public void FullScreenToggle(object? arg)
     {
-        if (_mainWindow == null) return;
+        
+        IsFullscreen = !IsFullscreen;
 
-        if (_isFullscreen)
-        {
-            _mainWindow.WindowStyle = WindowStyle.SingleBorderWindow;
-            _mainWindow.WindowState = WindowState.Normal;
-            _mainWindow.ResizeMode = ResizeMode.CanResize;
-        }
-        else
-        {
-            _mainWindow.WindowStyle = WindowStyle.None;
-            _mainWindow.WindowState = WindowState.Maximized;
-            _mainWindow.ResizeMode = ResizeMode.NoResize;
-        }
-
-        _isFullscreen = !_isFullscreen;
+        FullScreenToggleRequested?.Invoke(this, EventArgs.Empty);
     }
 
 
