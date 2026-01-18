@@ -11,6 +11,7 @@ namespace Labb3_QuizApp.ViewModels;
 
 internal class MainWindowViewModel : ViewModelBase
 {
+    private readonly IDialogService _dialogService;
 
     private Window _mainWindow;
 
@@ -73,6 +74,7 @@ internal class MainWindowViewModel : ViewModelBase
     public QuestionPackGeneratorAPIService QuestionPackGeneratorAPIService { get; }
     public MainWindowViewModel()
     {
+        _dialogService = new DialogService();
         PlayerViewModel = new PlayerViewModel(this);
         ConfigurationViewModel = new ConfigurationViewModel(this);
         QuestionPackGeneratorAPIService = new QuestionPackGeneratorAPIService();
