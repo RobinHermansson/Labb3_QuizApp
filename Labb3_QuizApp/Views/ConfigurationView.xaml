@@ -8,7 +8,7 @@
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              d:DesignHeight="450" d:DesignWidth="800"
              FontSize="12"
-             DataContext="{Binding ConfigurationViewModel}">
+             >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition  Width="2*"/>

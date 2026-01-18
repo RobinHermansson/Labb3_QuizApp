@@ -7,7 +7,7 @@
              xmlns:answertostateconverter="clr-namespace:Labb3_QuizApp.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-             DataContext="{Binding PlayerViewModel}">
+             >
     <UserControl.Resources>
         <answertostateconverter:AnswerToStateConverter x:Key="AnswerToStateConverter"/>
         <Style x:Key="AnswerButtonStyle" TargetType="Button">

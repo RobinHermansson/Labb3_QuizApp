@@ -197,7 +197,7 @@ class PlayerViewModel : ViewModelBase
         else
         {
             _timer.Stop();
-            if (_mainWindowViewModel.CurrentView is PlayerView)
+            if (_mainWindowViewModel.CurrentViewModel is PlayerViewModel)
             {
                 MessageBox.Show($"Quiz completed! You got {CorrectlyAnsweredCount} correct! out of {_shuffledQuestions.Count}");
             }

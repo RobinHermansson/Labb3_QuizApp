@@ -1,7 +1,6 @@
 ﻿using Labb3_QuizApp.Command;
 using Labb3_QuizApp.Models;
 using Labb3_QuizApp.Services;
-using Labb3_QuizApp.Views;
 using Labb3_QuizApp.Windows;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -17,6 +16,16 @@ internal class MainWindowViewModel : ViewModelBase
 
     private bool _isFullscreen;
 
+    private ViewModelBase _currentViewModel;
+    public ViewModelBase CurrentViewModel
+    {
+        get => _currentViewModel;
+        set 
+        {
+            _currentViewModel = value;
+            RaisePropertyChanged();
+        }
+    }
     public ObservableCollection<QuestionPackViewModel> Packs { get; } = new();
     private QuestionPackViewModel _activePack;
 
@@ -45,41 +54,6 @@ internal class MainWindowViewModel : ViewModelBase
         }
     }
     public DelegateCommand SelectNewActivePackCommand { get; }
-
-
-    private PlayerView _playerView;
-
-    private UserControl _currentView;
-    public UserControl CurrentView
-    {
-        get => _currentView;
-        set
-        {
-            _currentView = value;
-            RaisePropertyChanged();
-        }
-    }
-
-    public PlayerView PlayerView
-    {
-        get => _playerView;
-        set
-        {
-            _playerView = value;
-            RaisePropertyChanged();
-        }
-    }
-    private ConfigurationView _configurationView;
-
-    public ConfigurationView ConfigurationView
-    {
-        get => _configurationView;
-        set
-        {
-            _configurationView = value;
-            RaisePropertyChanged();
-        }
-    }
 
     public QuestionPackViewModel ActivePack
     {
@@ -121,7 +95,7 @@ internal class MainWindowViewModel : ViewModelBase
         ExitGameCommand = new DelegateCommand(ExitGame);
 
 
-        CurrentView = new ConfigurationView();
+        CurrentViewModel = ConfigurationViewModel;
 
         var allPacks = _packHandlerService.LoadAllPacks();
         allPacks.ForEach(p => Packs.Add(new QuestionPackViewModel(p)));
@@ -140,23 +114,23 @@ internal class MainWindowViewModel : ViewModelBase
 
     public void SwitchToPlayerView(object? arg)
     {
-        CurrentView = new PlayerView();
+        CurrentViewModel = PlayerViewModel;
         PlayerViewModel.PlayGame(arg);
         SwitchToConfigurationViewCommand.RaiseCanExecuteChanged();
     }
 
     public bool CanSwitchToPlayerView(object? arg)
     {
-        return !(CurrentView is PlayerView) && ActivePack?.Questions.Count > 0;
+        return !(CurrentViewModel is PlayerViewModel) && ActivePack?.Questions.Count > 0;
     }
     public void SwitchToConfigurationView(object? arg)
     {
-        CurrentView = new ConfigurationView();
+        CurrentViewModel = ConfigurationViewModel;
     }
 
     public bool CanSwitchToConfigurationView(object? arg)
     {
-        return !(CurrentView is ConfigurationView);
+        return !(CurrentViewModel is ConfigurationViewModel);
     }
 
     public void CreateNewPack(object? arg)
